@@ -1,0 +1,122 @@
+@import './variables';
+.slider {
+  height: 100vh;
+  //   max-height:1080px ;
+  overflow: hidden;
+  margin-bottom: 50px;
+  margin-top: calc(#{$header-height} * -1);
+
+  &__item {
+    @include flex(center, space-between);
+    position: relative;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    inset: 0;
+
+    &.active {
+      position: absolute;
+      opacity: 1;
+      visibility: visible;
+      pointer-events: visible;
+      top: 0;
+      left: 0;
+    }
+
+    &__infor {
+      position: absolute;
+      top: 20%;
+      left: 6%;
+
+      z-index: 98;
+
+      &__title,
+      &__des,
+      &__detail {
+        color: $txt-white;
+        font-family: 'Cabin', sans-serif;
+      }
+      &__title {
+        font-size: 66px;
+        line-height: 75px;
+        margin-bottom: 25px;
+      }
+      &__des {
+        font-size: 30px;
+        margin-bottom: 5px;
+      }
+      &__detail {
+        font-size: 16px;
+        margin-bottom: 50px;
+      }
+      &__btn button {
+        @include button();
+        margin-left: 20px;
+      }
+
+      &__title > span, &__des > span, &__detail > span, &__btn{
+          display: block;
+          transform: translateY(-100%);
+          transition: transform 0.9s ease;
+      }
+    }
+
+    // @each $val in $slider {
+    //     &__img{
+    //         background: rgba($color: #000000, $alpha: 1.0) url(../assets/clothes-img/slider/#{$val});
+    //     }
+    // }
+
+    &.active &__infor{
+        &__title > span, &__des > span, &__detail > span, &__btn{
+            transform: translateY(0);
+        }
+    }
+    &__img {
+      flex-grow: 1;
+    //   height: 100vh;
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 1;
+        background-color: rgba($color: #000000, $alpha: 0.3);
+      }
+      img{
+          height: 100vh;
+          object-fit: cover;
+          object-position:top;
+      }
+    }
+  }
+
+  &__control {
+    @include flex(center, center);
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+
+    &__item ~ &__item {
+      margin-left: 10px;
+    }
+
+    &__item {
+      @include flex(center, center);
+      font-size: 2rem;
+      cursor: pointer;
+      color: rgb(194, 194, 194);
+
+      &:hover {
+        color: white;
+      }
+      .index {
+        font-size: 1.5rem;
+      }
+    }
+  }
+}

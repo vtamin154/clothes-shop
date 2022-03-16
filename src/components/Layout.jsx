@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route} from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 import Routes from '../routes/Routes';
@@ -11,10 +11,10 @@ const Layout = () => {
         render={(props) => (
           <div>
             <Header {...props} />
-            <div className="container">
+            <div>
               <div className="main">
-                <Routes/>
-                <Slider/>
+                <Routes />
+                {/* <Slider /> */}
               </div>
             </div>
             <Footer />
