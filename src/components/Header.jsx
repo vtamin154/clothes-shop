@@ -17,25 +17,29 @@ const navBar = [
 ];
 
 const Header = () => {
-  const headerRef = useRef(null);
-  useEffect(() => {
-    window.addEventListener("scroll", () =>{
-      if(document.body.scrollTop > 50 || document.documentElement.scrollTop > 50){
-        headerRef.current.classList.add('shrink');
-      }
-      else{
-        headerRef.current.classList.remove('shrink');
-      }
-    })
+  const navBarRef = useRef(null);
 
+  useEffect(() => {
+    window.addEventListener('scroll', () => {
+      if (
+        document.body.scrollTop > 50 ||
+        document.documentElement.scrollTop > 50
+      ) {
+        navBarRef.current.classList.add('shrink');
+      } else {
+        navBarRef.current.classList.remove('shrink');
+      }
+    });
     return () => {
-      window.removeEventListener("scroll");
-    }
-  }, [])
+      window.removeEventListener('scroll');
+    };
+  }, []);
+
   return (
     <div className="container-fluid header">
       <div className="row">
         <Navbar
+          ref={navBarRef}
           fixed="top"
           expand="lg"
           variant="dark"

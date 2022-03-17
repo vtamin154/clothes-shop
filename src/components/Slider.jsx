@@ -1,27 +1,25 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import sliderData from '../assets/fake-data/slider';
 import { IoChevronBackOutline } from 'react-icons/io5';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 
 const Slider = (props) => {
   const [activeSlider, setActiveSlider] = useState(0);
-  // const data = props.data;
+  const data = props.data;
   // console.log(data);
-  // console.log(sliderData[0].img);
 
   const timeOut = props.timeOut ? props.timeOut : 3000;
 
   const nextSlide = useCallback(() => {
     const index = activeSlider < 2 ? activeSlider + 1 : 0;
     setActiveSlider(index);
-  }, [activeSlider, sliderData]);
+  }, [activeSlider, data]);
 
   const preSlide = useCallback(() => {
     const index = activeSlider > 0 ? activeSlider - 1 : 2;
     setActiveSlider(index);
-  }, [activeSlider, sliderData]);
+  }, [activeSlider, data]);
 
   useEffect(() => {
     if (props.auto) {
@@ -37,7 +35,7 @@ const Slider = (props) => {
 
   return (
     <div className="slider">
-      {sliderData.map((item, index) => (
+      {data.map((item, index) => (
         <SliderItem key={index} item={item} active={index === activeSlider} />
       ))}
       {props.control ? (
@@ -47,7 +45,7 @@ const Slider = (props) => {
           </div>
           <div className="slider__control__item">
             <div className="index">
-              {activeSlider + 1}/{sliderData.length}
+              {activeSlider + 1}/{data.length}
             </div>
           </div>
           <div className="slider__control__item">

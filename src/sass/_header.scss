@@ -1,96 +1,105 @@
 // .header{
-    // background: transparent;
-    // position: fixed;
-    // top: 0px;
-    // left: 0px;
+// background: transparent;
+// position: fixed;
+// top: 0px;
+// left: 0px;
 
-    // width: 100%;
-    // z-index: 99;
-    // height: $header-height;
+// width: 100%;
+// z-index: 99;
+// height: $header-height;
 
-    // .container{
-    //     height: 100%;
-    // }
-    
-    // &__logo{
-    //     @include flex(center, center);
-    //     position: absolute;
-    //     inset: 0;
-    //     pointer-events: none;
-
-    //     img{
-    //         height: 28px;
-    //     }
-    // }
-
-    // &__menu{
-    //     @include flex(center, space-between);
-    //     height: 100%;
-    //     font-size: 1.5rem;
-    //     &__item ~ &__item{
-    //         margin-left: 39px;
-    //     }
-
-    //     &__item:hover{
-    //         color: $main-color;
-    //     }
-
-    //     &__left, &__right{
-    //         @include flex(center,center);
-    //         height: 100%;
-    //     }
-
-    //     &__right{
-    //         font-size: 2.25rem;
-    //         &__item{
-    //             @include flex(center,center);
-
-    //         }
-    //         @include tablet{
-    //             margin-left: auto;
-    //         }
-    //         @include mobile{
-    //             font-size: 1.5rem;
-    //         }
-    //     }
-
-    //     &__mobile-toggle{
-    //         display: none;
-    //     }
-    //     &__left{
-    //         &__close{
-    //             display: none;
-    //         }
-    //     }
-    // }
+// .container{
+//     height: 100%;
 // }
 
-.logo{
-    height: 60px;
-}
-.header{
-    height: $header-height;
-    transition: height 0.3s ease;
+// &__logo{
+//     @include flex(center, center);
+//     position: absolute;
+//     inset: 0;
+//     pointer-events: none;
 
-    &.shrink{
-        background-color: rgba($color: #000000, $alpha: 0.5);
-        height: $header-shrink-height;
+//     img{
+//         height: 28px;
+//     }
+// }
+
+// &__menu{
+//     @include flex(center, space-between);
+//     height: 100%;
+//     font-size: 1.5rem;
+//     &__item ~ &__item{
+//         margin-left: 39px;
+//     }
+
+//     &__item:hover{
+//         color: $main-color;
+//     }
+
+//     &__left, &__right{
+//         @include flex(center,center);
+//         height: 100%;
+//     }
+
+//     &__right{
+//         font-size: 2.25rem;
+//         &__item{
+//             @include flex(center,center);
+
+//         }
+//         @include tablet{
+//             margin-left: auto;
+//         }
+//         @include mobile{
+//             font-size: 1.5rem;
+//         }
+//     }
+
+//     &__mobile-toggle{
+//         display: none;
+//     }
+//     &__left{
+//         &__close{
+//             display: none;
+//         }
+//     }
+// }
+// }
+
+.header {
+  height: $header-height;
+  &__navbar {
+    background-color: rgba($color: #000000, $alpha: 0.07);
+    transition: all 0.3s ease-in-out;
+    
+    &.shrink {
+      background-color: rgba($color: #000000, $alpha: 0.9);
+      // height: $header-shrink-height;
+    }
+  }
+  
+  &__left {
+    &__item {
+      &__search {
+        margin: auto 0px;
+        height: 35px;
+        align-items: center;
+      }
+    }
+    span {
+      font-family: 'Cabin', sans-serif;
+      @include mobile {
+        display: none;
+      }
     }
 
-    &__navbar{
-        background-color: rgba($color: #000000, $alpha: 0.07);
+    .logo {
+      height: 60px;
+      @include mobile {
+        height: 45px;
+      }
     }
-
-    &__left{
-        &__item{
-            &__search{
-                margin: auto 0px;
-                height: 35px;
-                align-items: center;
-            }
-        }
-    }
-    &__right{
-        font-size: 18px;
-    }
+  }
+  &__right {
+    font-size: 18px;
+  }
 }

@@ -1,0 +1,67 @@
+.advertise {
+  //   @for $i from 1 through 3 {
+  //     &__item:nth-child(3n + #{$i}) > div {
+  //       background-color: rgba($color: #000000, $alpha: 0.1 * $i);
+  //     }
+  //   }
+
+  @each $val, $key in $imgs {
+    &__item:nth-child(n + #{$key + 1}) > div {
+      background: rgba($color: #000000, $alpha: 0.3)
+        url('../assets/clothes-img/#{$val}');
+      background-size: cover;
+
+    // background-color: rgba($color: #000000, $alpha: 0.1 * ($key+1));
+
+      &:hover {
+        background-color: rgba($color: #000000, $alpha: 0.2);
+      }
+    }
+  }
+  
+  &__item {
+    height: 470px;
+
+    &__cover {
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+
+      //   background: rgba($color: #000000, $alpha: 0.3) url('../assets/clothes-img/ad1.jpg');
+
+      background-blend-mode: darken;
+      background-repeat: no-repeat;
+      background-position: center;
+
+      transition: all 0.3s ease;
+
+      &__title,
+      &__des {
+        color: $txt-white;
+        font-family: 'Alata', sans-serif;
+        margin: 0px 30px 20px 30px;
+      }
+
+      &__title {
+        font-size: 2.9rem;
+        font-weight: 600;
+        line-height: 50px;
+      }
+      &__des {
+        font-size: 16px;
+      }
+      &__btn {
+        button {
+          @include button();
+          margin: 10px auto 40px 30px;
+        }
+      }
+    }
+  }
+}
+// @each $val in $imgs {
+//     .c {
+//       background: rgba($color: #000000, $alpha: 0.3)
+//         url('../assets/clothes-img/#{$val}');
+//     }
+// }
