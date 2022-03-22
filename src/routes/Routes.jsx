@@ -4,6 +4,8 @@ import Home from '../pages/Home';
 import Catalog from '../pages/Catalog';
 import Cart from '../pages/Cart';
 import Product from '../pages/Product';
+import AddProducts from '../pages/admin/AddProducts';
+
 const Routes = () => {
   return (
     <Switch>
@@ -11,6 +13,7 @@ const Routes = () => {
       <Route path="/catalog/:slug" exact component={Product}></Route>
       <Route path="/catalog" exact component={Catalog}></Route>
       <Route path="/cart" exact component={Cart}></Route>
+      <Route path = "/addProducts" exact component={AddProducts}/>
     </Switch>
   );
 }
