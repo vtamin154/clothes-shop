@@ -1,0 +1,86 @@
+.about {
+  background: rgba($color: #ffffff, $alpha: 0.7)
+    url('https://firebasestorage.googleapis.com/v0/b/e-commerce-7dd93.appspot.com/o/product-images%2Fjzpo5xccs3pd2rqcio2n.jpg?alt=media&token=39607794-1324-4aff-a105-4e045d1716fb');
+
+  background-blend-mode: lighten;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+
+  .row {
+    padding-top: 10px;
+    @include tablet(){
+        padding-bottom: 40px;
+    }
+  }
+  .fade-in-section {
+    opacity: 0;
+    transform: translateX(-20vh);
+    visibility: hidden;
+    transition: opacity 1s linear, transform 1s linear;
+    will-change: opacity, visibility;
+  }
+  
+  .fade-in-section.is-visible {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+    display: flex; 
+  }
+  .col-lg-3{
+      width: 26.5%;
+      @include tablet(){
+          width: 90%;
+          margin: 30px auto;
+      }
+  }
+  &__img {
+    margin: 10px 15px;
+  
+    img {
+      width: 100%;
+      @include tablet(){
+          height: 200px;
+          object-fit: cover;
+          object-position: center;
+      }
+    }
+    @include mobile(){
+        &:last-child{
+            display: none;
+        }
+    }
+  }
+  &__content {
+      text-align: center;
+      h2{
+          font-size: 42px;
+          font-family: "Cabin", sans-serif;
+          margin-top: 25%;
+          margin-bottom: 8%;
+          line-height: 55px;
+        //   text-align: center;
+
+        @include tablet(){
+            margin-top: 0;
+            margin-bottom: 20px;
+
+        }
+        @include mobile(){
+            margin-top: 0;
+            font-size: 30px;
+            line-height: 40px;
+        }
+      }
+      &__btn{
+          @include button();
+          background-color: black;
+          border: black;
+          padding: 13px 25px;
+          &:hover{
+              background-color: rgb(32, 32, 32);
+          }
+      }
+  }
+}
