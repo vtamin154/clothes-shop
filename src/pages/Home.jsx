@@ -8,6 +8,8 @@ import advertise from '../assets/fake-data/advertise';
 import Products from '../components/Products';
 import About from '../components/About';
 import NewProducts from '../components/NewProducts';
+import Style from '../components/Style';
+import Policy from '../components/Policy';
 const Home = () => {
   return (
     <Helmet title="Trang chủ" className="container-fluid">
@@ -16,6 +18,8 @@ const Home = () => {
       <Products/>
       <About/>
       <NewProducts/>
+      <Style/>
+      <Policy/>
     </Helmet>
   );
 };
