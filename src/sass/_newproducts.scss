@@ -1,0 +1,191 @@
+.new-products {
+  margin-top: 200px;
+  .row:first-child {
+    text-align: center;
+    h1 {
+      font-size: 45px;
+      position: relative;
+      font-weight: 800;
+      font-family: 'Cabin', sans-serif;
+      line-height: 100px;
+
+      @include mobile() {
+        font-size: 30px;
+        line-height: 70px;
+      }
+      @include tablet() {
+        font-size: 40px;
+        line-height: 90px;
+      }
+      &::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: 0%;
+        height: 2px;
+        width: 120px;
+        background-color: black;
+        transform: translateX(-50%);
+      }
+    }
+
+    p {
+      font-family: 'Cabin', sans-serif;
+      margin-top: 20px;
+      font-size: 18px;
+      @include mobile() {
+        font-size: 16px;
+        margin-top: 10px;
+      }
+      @include tablet() {
+        font-size: 18px;
+        margin-top: 15px;
+      }
+    }
+  }
+  &__img {
+    img {
+      //   width: 100%;
+      width: 840px;
+      height: 517px;
+      object-fit: cover;
+      object-position: center;
+      @include mobile() {
+        width: 100%;
+      }
+      @include tablet() {
+        width: 100%;
+      }
+    }
+  }
+
+  &__content {
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 5px 50px 0px rgb(33 33 33 / 15%);
+    @include mobile() {
+      text-align: center;
+    }
+    @include tablet() {
+      text-align: center;
+    }
+    h3 {
+      position: relative;
+      font-size: 30px;
+      font-family: 'Cabin', sans-serif;
+      line-height: 80px;
+      @include mobile() {
+        font-size: 28px;
+        line-height: 55px;
+      }
+      @include tablet() {
+        line-height: 75px;
+      }
+      &::after {
+        position: absolute;
+        content: '';
+        height: 2px;
+        width: 330px;
+        bottom: -10%;
+        left: 77%;
+        transform: translateX(-50%);
+        background-color: black;
+        @include mobile() {
+          bottom: 0%;
+          left: 50%;
+        }
+        @include tablet() {
+          bottom: 0%;
+          left: 50%;
+          width: 200px;
+        }
+      }
+    }
+    p {
+      font-family: 'Cabin', sans-serif;
+      font-size: 16px;
+      line-height: 30px;
+      margin: 35px auto;
+      @include mobile() {
+        line-height: 23px;
+        margin: 10px auto;
+      }
+      @include tablet() {
+        line-height: 28px;
+        margin: 25px auto;
+      }
+    }
+    a {
+      @include button();
+      color: black;
+      border: 1px solid black;
+      display: inline-block;
+      margin: 20px 0 30px 0;
+      padding: 15px 30px;
+
+      @include mobile() {
+        margin: 5px 0 10px 0;
+        padding: 10px 20px;
+      }
+      @include tablet() {
+        margin: 0 0 25px 0;
+        // padding: 10px 20px;
+      }
+    }
+  }
+  .row {
+    position: relative;
+    align-items: center;
+    margin-bottom: 80px;
+    @include mobile() {
+      align-items: end;
+      margin-bottom: 50px;
+    }
+    @include tablet() {
+      align-items: end;
+      margin-bottom: 200px;
+    }
+
+    .new-products__content {
+      position: absolute;
+      width: 29%;
+      left: 61%;
+      padding: 40px;
+      @include mobile() {
+        width: 100%;
+        left: 0%;
+        padding: 20px 30px;
+      }
+
+      @include tablet() {
+        width: 80%;
+        left:10%;
+        margin-bottom: -150px;
+        padding: 20px 30px;
+      }
+    }
+  }
+  .row:nth-child(2n + 1) {
+    .new-products__content {
+      text-align: right;
+      left: 11%;
+      box-shadow: -50px 5px 50px 0px rgba(82, 82, 82, 0.15);
+      @include mobile() {
+        left: 0%;
+        text-align: center;
+      }
+      @include tablet() {
+        left: 10%;
+        text-align: center;
+      }
+      h3::after {
+        left: 25%;
+        @include mobile() {
+          left: 50%;
+        }
+        @include tablet() {
+          left: 50%;
+        }
+      }
+    }
+  }
+}

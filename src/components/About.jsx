@@ -56,3 +56,4 @@ const About = () => {
 };
 
 export default About;
+// https://stackoverflow.com/questions/59595700/how-to-make-a-react-component-fade-in-on-scroll-using-intersectionobserver-but

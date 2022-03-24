@@ -7,6 +7,7 @@ import sliderData from '../assets/fake-data/slider';
 import advertise from '../assets/fake-data/advertise';
 import Products from '../components/Products';
 import About from '../components/About';
+import NewProducts from '../components/NewProducts';
 const Home = () => {
   return (
     <Helmet title="Trang chủ" className="container-fluid">
@@ -14,6 +15,7 @@ const Home = () => {
       <Advertise data = {advertise}/>
       <Products/>
       <About/>
+      <NewProducts/>
     </Helmet>
   );
 };
