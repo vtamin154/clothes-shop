@@ -5,10 +5,7 @@ const ProductLine = (props) => {
   const { products } = useContext(ProductContextProvider);
   const data = props.data;
   // console.log("data", data);
-  const listProduct = data.length ? data : products;
-  // const listProduct = products;
-  // const listProduct = props.data;
-  // console.log("line",listProduct);
+  const listProduct = data ? data : products.slice(0,10);
   return (
     <div className="product-line container">
       <div className="row">

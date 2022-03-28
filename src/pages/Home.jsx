@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Advertise from '../components/Advertise';
 import Helmet from '../components/Helmet';
 import Slider from '../components/Slider';
@@ -10,12 +10,16 @@ import About from '../components/About';
 import NewProducts from '../components/NewProducts';
 import Style from '../components/Style';
 import Policy from '../components/Policy';
+import { ProductContextProvider } from '../components/ProductContext';
+
 const Home = () => {
+  const  { products }  = useContext(ProductContextProvider);
+  // console.log("home", products); return [] - error
   return (
     <Helmet title="Trang chủ" className="container-fluid">
       <Slider control auto timeOut={5000} data = {sliderData} />
       <Advertise data = {advertise}/>
-      <Products/>
+      <Products data={products}/>
       <About/>
       <NewProducts/>
       <Style/>

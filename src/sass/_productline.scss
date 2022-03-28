@@ -57,14 +57,13 @@
         button {
           @include button();
           //   color: black;
-          border: 1px solid black;
-          background-color: rgb(34, 34, 34);
-          border: 1px solid rgb(34, 34, 34);
+          border: 1px solid $main-color;
+          background-color: $main-bg;
           width: 100%;
           padding: 10px;
           //   width: 208px;
           &:hover {
-            background: rgb(0, 0, 0);
+            background: $second-bg;
             color: white;
           }
 
@@ -117,7 +116,7 @@
       width: 120px;
       left: 50%;
       bottom: 0%;
-      background-color: #000000;
+      background-color: $main-bg;
       transform: translateX(-50%);
     }
 

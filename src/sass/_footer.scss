@@ -2,7 +2,7 @@
   color: rgb(206, 206, 206);
   font-family: 'Alata', sans-serif;
   .row {
-    background-color: black;
+    background-color: #222222;
     padding: 70px 60px;
     @include mobile() {
       padding: 60px 40px;
@@ -73,11 +73,11 @@
           display: inline-block;
           margin: 10px;
           text-decoration: none;
-          color: rgb(39, 39, 39);
+          color: $txt-main-color;
           font-size: 15px;
           font-family: "Cabin", sans-serif;
           &:hover{
-              color: black;
+              color: $txt-second-color;
           }
       }
   }

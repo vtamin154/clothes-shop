@@ -1,49 +1,58 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { db } from '../config/Config';
 import ProductLine from './ProductLine';
-import { Table, Button, ButtonGroup } from 'react-bootstrap';
 
 // Pagination.propTypes = {
-  // pagination: PropTypes.object.isRequired,
-  // onChangePage: PropTypes.func
+// pagination: PropTypes.object.isRequired,
+// onChangePage: PropTypes.func
 // };
 
 function Pagination(props) {
-  const [productList, setProductList] = useState(props.data);
+  const [productList, setProductList] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
 
-  const productPerPage = 4;
+  const productPerPage = 12;
   const pageVisited = pageNumber;
-  const displayProducts = props.data.slice(pageVisited, pageVisited + productPerPage);
+  const displayProducts = props.data.slice(
+    pageVisited * productPerPage - 12,
+    pageVisited * productPerPage
+  );
+  // console.log(displayProducts);
+  // console.log("prLine", props.data);
 
-  console.log("pagination", productList);
-  // console.log("pageVisited", pageVisited, "productList", displayProducts);
   useEffect(() => {
-      setProductList(displayProducts);
-  },[pageNumber]);
+    setProductList(displayProducts);
+  }, [pageNumber]);
 
-  const handleNext = () =>{
-      if(pageNumber < Math.ceil( props.data.length/productPerPage)){
-        setPageNumber(pageNumber + 1);
-      }
-      else{
-          alert("that's all");
-      }
-  }
-  const handlePre = () =>{
-      if(pageNumber > 1 ){
-        setPageNumber(pageNumber - 1);
-      }
-      else{
-          alert("that's all");
-      }
-  }
+  const handleNext = () => {
+    if (pageNumber < Math.ceil(props.data.length / productPerPage)) {
+      setPageNumber(pageNumber + 1);
+    } else {
+      alert("that's all");
+    }
+  };
+
+  const handlePre = () => {
+    if (pageNumber > 1) {
+      setPageNumber(pageNumber - 1);
+    } else {
+      alert("that's all");
+    }
+  };
+
   return (
-    <div>
-      <ProductLine data = {productList}/>
-      <button onClick={() => handlePre()}>Pre</button>
-      <button onClick={() => handleNext()}>Next</button>
+    <div className="pagination">
+      {/* <div className="row"> */}
+        <ProductLine
+          data={productList.length > 0 ? productList : displayProducts}
+        />
+      {/* </div> */}
+      {/* <div className="row"> */}
+        <div className="pagination__btn">
+          <button onClick={() => handlePre()}>Pre</button>
+          <button onClick={() => handleNext()}>Next</button>
+        </div>
+      {/* </div> */}
     </div>
   );
 }

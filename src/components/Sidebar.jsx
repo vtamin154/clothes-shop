@@ -1,6 +1,6 @@
 import React, { useRef, useContext, useState, useCallback, useEffect } from 'react';
 import { Form, FormControl } from 'react-bootstrap';
-// import { ProductContextProvider } from './ProductContext';
+import { ProductContextProvider } from './ProductContext';
 
 const Sidebar = (props) => {
   const [filterCategory, setFilterCategory] = useState([]);
@@ -8,7 +8,7 @@ const Sidebar = (props) => {
   // const { products } = useContext(ProductContextProvider);
   const products = props.data;
 
-  console.log("sidebar",products);
+  // console.log("sidebar",products);
 
   const handleCheck = (item) => {
     setFilterCategory(prev => {

@@ -61,7 +61,7 @@
         bottom: 0%;
         content: '';
         height: 2px;
-        background-color: black;
+        background-color: $main-bg;
         width: 100%;
         transform: translateX(-50%);
         @include mobile() {
@@ -77,13 +77,13 @@
     }
     &__btn {
       @include button();
-      color: black;
-      border: 1px solid black;
+      color: $txt-main-color;
+      border: 1px solid $main-color;
       display: inline-block;
       margin-top: 30px;
       &:hover {
-        background-color: black;
-        color: white;
+        background-color: $main-bg;
+        color: $txt-white;
       }
       @include mobile() {
         margin-top: 15px;

@@ -1,13 +1,13 @@
 import React, { useState, useContext } from 'react';
 import Helmet from '../components/Helmet';
 import Pagination from '../components/Pagination';
-import ProductLine from '../components/ProductLine';
+// import ProductLine from '../components/ProductLine';
 import Sidebar from '../components/Sidebar';
 import { ProductContextProvider } from '../components/ProductContext';
 
 const Catalog = () => {
   const  { products }  = useContext(ProductContextProvider);
-  const [productList, setProductList] = useState(products);
+  const [productList, setProductList] = useState([]);
 
   // console.log('parent', products);
   // console.log('parent2', productList);
@@ -23,8 +23,8 @@ const Catalog = () => {
             <Sidebar receiveProducts={receiveProducts} data={products} />
           </div>
           <div className="catalog__products col-lg-9">
-            <ProductLine data={productList} />
-            {/* <Pagination data = {products}/> */}
+            {/* <ProductLine data={productList} /> */}
+            <Pagination data = {productList.length > 0 ? productList : products}/>
           </div>
         </div>
       </div>

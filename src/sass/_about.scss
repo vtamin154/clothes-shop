@@ -75,11 +75,11 @@
       }
       &__btn{
           @include button();
-          background-color: black;
-          border: black;
+          background-color: $main-bg;
+          border: $main-bg;
           padding: 13px 25px;
           &:hover{
-              background-color: rgb(32, 32, 32);
+              background-color: $second-bg;
           }
       }
   }
