@@ -28,12 +28,12 @@ const Advertise = (props) => {
           <div className="col-lg-4 advertise__item" key={index} data-aos="fade-in">
             <div className="advertise__item__cover">
               <div className="content">
-                <div className="advertise__item__cover__title">
+                <div data-aos="fade-up" className="advertise__item__cover__title">
                   {item.title}
                 </div>
-                <div className="advertise__item__cover__des">{item.des}</div>
+                <div data-aos="fade-up" className="advertise__item__cover__des">{item.des}</div>
                 <div className="advertise__item__cover__btn">
-                  <Link to={item.path} className="text-decoration-none">
+                  <Link to={item.path} data-aos="fade-up" className="text-decoration-none">
                     <button>Mua ngay</button>
                   </Link>
                 </div>

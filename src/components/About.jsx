@@ -39,8 +39,8 @@ const About = () => {
           />
         </div>
         <div className="about__content col-lg-5">
-          <h2>Mọi sản phẩm do chúng tôi thiết kế</h2>
-          <button className="about__content__btn">Mua ngay</button>
+          <h2 data-aos="fade-up">Mọi sản phẩm do chúng tôi thiết kế</h2>
+          <button data-aos="fade-down"className="about__content__btn">Mua ngay</button>
         </div>
         <div 
         data-aos="fade-left" 

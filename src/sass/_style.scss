@@ -11,16 +11,27 @@
     // padding: 0px 20px 0 5px;
     padding-right: 40px;
     padding-left: 10px;
+    @include tablet(){
+      padding: 0 20px;
+    }
     @include mobile() {
       padding: 0;
     }
   }
-  .col-lg-3 {
+  .col-md-3 {
     width: 24%;
+    @include tablet() {
+      width: 100%;
+    }
     @include mobile() {
       width: 100%;
     }
-    @include tablet() {
+  }
+  .col-md-2{  
+    @include tablet(){
+      width: 25%;
+    };
+    @include mobile(){
       width: 100%;
     }
   }
@@ -94,13 +105,6 @@
       width: 100%;
       margin-bottom: 20px;
       &:nth-child(n + 4) {
-        display: none;
-      }
-    }
-    @include tablet() {
-      width: 100%;
-      margin-bottom: 30px;
-      &:nth-child(3n + 1) {
         display: none;
       }
     }

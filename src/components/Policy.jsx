@@ -1,4 +1,5 @@
 import React from 'react';
+import Aos from 'aos';
 import { IoEarthOutline } from 'react-icons/io5';
 import { FaMedal } from 'react-icons/fa';
 import { GiReceiveMoney } from 'react-icons/gi';
@@ -6,7 +7,7 @@ const policy = () => {
   return (
     <div className="policy container">
       <div className="row justify-content-between">
-        <div className="col-lg-4 policy__cover">
+        <div className="col-lg-4 policy__cover" data-aos="fade-up">
           <div className="policy__cover__icon">
             <IoEarthOutline />
           </div>
@@ -16,7 +17,7 @@ const policy = () => {
             giá trị từ 650k trở lên
           </p>
         </div>
-        <div className="col-lg-4 policy__cover">
+        <div className="col-lg-4 policy__cover" data-aos="fade-up">
           <div className="policy__cover__icon">
             <FaMedal />
           </div>
@@ -26,7 +27,7 @@ const policy = () => {
             mẫu quảng cáo
           </p>
         </div>
-        <div className="col-lg-4 policy__cover">
+        <div className="col-lg-4 policy__cover" data-aos="fade-up">
           <div className="policy__cover__icon">
             <GiReceiveMoney />
           </div>

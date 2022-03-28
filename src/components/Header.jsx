@@ -1,11 +1,8 @@
-import React, { useEffect, useRef } from 'react';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+// import { Link } from 'react-router-dom';
 import logo from '../assets/clothes-img/logo.png';
 import {
-  AiOutlineSearch,
   AiOutlineShoppingCart,
-  AiOutlineUser,
 } from 'react-icons/ai';
 
 import { Navbar, Container, Nav, Form, FormControl } from 'react-bootstrap';
@@ -20,7 +17,7 @@ const Header = () => {
   const navBarRef = useRef(null);
 
   useEffect(() => {
-    window.addEventListener('scroll', () => {
+    const handleScroll = () =>{
       if (
         document.body.scrollTop > 50 ||
         document.documentElement.scrollTop > 50
@@ -29,9 +26,10 @@ const Header = () => {
       } else {
         navBarRef.current.classList.remove('shrink');
       }
-    });
+    }
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener('scroll');
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 

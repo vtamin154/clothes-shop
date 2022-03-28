@@ -12,9 +12,6 @@
     }
 }
 
-@mixin background {
-    
-}
 @mixin flex($align-item, $justify-content) {
     display: flex;
     align-items: $align-item;

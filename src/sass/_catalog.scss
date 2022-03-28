@@ -1,0 +1,16 @@
+.catalog__products{
+    .product-line{
+        @include tablet(){
+            margin-top: 80px;
+        }
+      .col-lg-2{
+        width: 25%;
+        @include tablet(){
+          width: 33%;
+        }
+        @include mobile(){
+          width: 50%;
+        }
+      }
+    }
+  }
