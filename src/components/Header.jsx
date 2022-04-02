@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import logo from '../assets/clothes-img/logo.png';
 import {
   AiOutlineShoppingCart,
@@ -63,13 +63,13 @@ const Header = () => {
             <Navbar.Collapse className="header__right justify-content-end">
               <Nav className="header__right__link mx-3 my-auto">
                 {navBar.map((item, index) => (
-                  <Nav.Link className="px-3" key={index} href={item.path}>
+                  <Link className="px-3 link" key={index} to={item.path}>
                     {item.display}
-                  </Nav.Link>
+                  </Link>
                 ))}
-                <Nav.Link>
+                <Link to="/cart" className="link">
                   <AiOutlineShoppingCart className="fs-1" />
-                </Nav.Link>
+                </Link>
               </Nav>
             </Navbar.Collapse>
           </Container>

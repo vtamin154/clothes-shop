@@ -1,8 +1,10 @@
 import React from 'react'
-
+import CartLine from '../components/CartLine'
 const Cart = () => {
   return (
-    <div>Cart</div>
+    <div>
+      <CartLine/>
+    </div>
   )
 }
 

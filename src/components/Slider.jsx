@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { IoChevronBackOutline } from 'react-icons/io5';
-import { IoChevronForwardOutline } from 'react-icons/io5';
+import { IoChevronBackOutline, IoChevronForwardOutline } from 'react-icons/io5';
 
 const Slider = (props) => {
   const [activeSlider, setActiveSlider] = useState(0);

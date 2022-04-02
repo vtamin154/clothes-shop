@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Aos from "aos";
-import "aos/dist/aos.css";
+// import Aos from "aos";
+// import "aos/dist/aos.css";
 
 const About = () => {
     
-    useEffect(() =>{
-        Aos.init({duration: 2000});
-    },[]);
+    // useEffect(() =>{
+    //     Aos.init({duration: 2000});
+    // },[]);
 
 // const imgRef = useRef();
 // const [isVisible, setVisible] = useState();
@@ -25,7 +25,7 @@ const About = () => {
       <div className="row justify-content-between">
         <div
         //   ref={imgRef}
-          data-aos="fade-right"
+          // data-aos="fade-right"
           className="about__img col-lg-3"
         //   className={`about__img col-lg-3 
         //   fade-in-section ${
@@ -43,7 +43,7 @@ const About = () => {
           <button data-aos="fade-down"className="about__content__btn">Mua ngay</button>
         </div>
         <div 
-        data-aos="fade-left" 
+        // data-aos="fade-left" 
         className="about__img col-lg-3">
           <img
             src="https://firebasestorage.googleapis.com/v0/b/e-commerce-7dd93.appspot.com/o/product-images%2Fa8o0upyejvpfikgyw7q9.jpg?alt=media&token=11472fa1-614c-4fcc-8b95-4b6c4cfa359d"

@@ -5,6 +5,7 @@ import Catalog from '../pages/Catalog';
 import Cart from '../pages/Cart';
 import Product from '../pages/Product';
 import AddProducts from '../pages/admin/AddProducts';
+import CartLine from '../components/CartLine';
 
 const Routes = () => {
   return (

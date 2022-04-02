@@ -4,26 +4,29 @@ import Header from './Header';
 import Footer from './Footer';
 import Routes from '../routes/Routes';
 import ProductContext from './ProductContext';
+import  CartProvider  from '../store/CartContext';
 // import Slider from './Slider';
 const Layout = () => {
   return (
     <ProductContext>
-    <BrowserRouter>
-      <Route
-        render={(props) => (
-          <div>
-            <Header {...props} />
-            <div>
-              <div className="main">
-                <Routes />
-                {/* <Slider /> */}
+      <CartProvider>
+        <BrowserRouter>
+          <Route
+            render={(props) => (
+              <div>
+                <Header {...props} />
+                {/* <div> */}
+                  <div className="main">
+                    <Routes />
+                    {/* <Slider /> */}
+                  </div>
+                {/* </div> */}
+                <Footer />
               </div>
-            </div>
-            <Footer />
-          </div>
-        )}
-      />
-    </BrowserRouter>
+            )}
+          />
+        </BrowserRouter>
+      </CartProvider>
     </ProductContext>
   );
 };

@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Aos from 'aos';
-import "aos/dist/aos.css";
+// import Aos from 'aos';
+// import "aos/dist/aos.css";
 
 const Advertise = (props) => {
   const data = props.data;
@@ -17,9 +17,9 @@ const Advertise = (props) => {
     }
   },[]);
 
-  useEffect(() =>{
-    Aos.init({duration:2000})
-  })
+  // useEffect(() =>{
+  //   Aos.init({duration:2000})
+  // })
   // console.log(data);
   return (
     <div className="advertise container">
@@ -28,12 +28,12 @@ const Advertise = (props) => {
           <div className="col-lg-4 advertise__item" key={index} data-aos="fade-in">
             <div className="advertise__item__cover">
               <div className="content">
-                <div data-aos="fade-up" className="advertise__item__cover__title">
+                <div className="advertise__item__cover__title">
                   {item.title}
                 </div>
-                <div data-aos="fade-up" className="advertise__item__cover__des">{item.des}</div>
+                <div  className="advertise__item__cover__des">{item.des}</div>
                 <div className="advertise__item__cover__btn">
-                  <Link to={item.path} data-aos="fade-up" className="text-decoration-none">
+                  <Link to={item.path} className="text-decoration-none">
                     <button>Mua ngay</button>
                   </Link>
                 </div>

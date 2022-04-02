@@ -1,11 +1,14 @@
 import React, { useContext } from 'react';
 import { ProductContextProvider } from './ProductContext';
+import { CartContext } from '../store/CartContext';
 
 const ProductLine = (props) => {
   const { products } = useContext(ProductContextProvider);
   const data = props.data;
   // console.log("data", data);
-  const listProduct = data ? data : products.slice(0,10);
+  const listProduct = data ? data : products.slice(0, 10);
+
+  const [,dispatch] = useContext(CartContext);
   return (
     <div className="product-line container">
       <div className="row">
@@ -14,12 +17,12 @@ const ProductLine = (props) => {
             className="product-line__card col-md-3 col-lg-2"
             key={product.ProductID}
           >
-            <a href="/" className="product-line__card__img">
+            <div className="product-line__card__img">
               <img src={product.ProductImg} alt="" />
               <div className="product-line__card__img__cart">
-                <button>Add to cart</button>
+                <button onClick={() => dispatch({type:"add_product" , payload: product})}>Add to cart</button>
               </div>
-            </a>
+            </div>
             <div className="product-content">
               <a
                 href="/"

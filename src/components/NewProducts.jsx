@@ -1,5 +1,5 @@
 import React from 'react';
-import Aos from 'aos';
+// import Aos from 'aos';
 
 const NewProducts = () => {
   return (
@@ -18,10 +18,10 @@ const NewProducts = () => {
             alt=""
           />
         </div>
-        <div className="col-lg-4 new-products__content" data-aos="fade-left">
+        <div className="col-lg-4 new-products__content" >
           <h3 data-aos="fade-left">Áo phông</h3>
           <p data-aos="fade-left">Bạn có thể đặt trước các sản phẩm thiết kế riêng.</p>
-          <a data-aos="fade-left"
+          <a 
             href="/"
             className="new-products__content__btn text-decoration-none"
           >
@@ -36,10 +36,10 @@ const NewProducts = () => {
             alt=""
           />
         </div>
-        <div className="col-lg-4 new-products__content" data-aos="fade-right">
-          <h3 data-aos="fade-right">Áo sơ mi</h3>
-          <p data-aos="fade-right">Bạn có thể đặt trước các sản phẩm thiết kế riêng.</p>
-          <a data-aos="fade-right"
+        <div className="col-lg-4 new-products__content" >
+          <h3 >Áo sơ mi</h3>
+          <p >Bạn có thể đặt trước các sản phẩm thiết kế riêng.</p>
+          <a 
             href="/"
             className="new-products__content__btn text-decoration-none"
           >
