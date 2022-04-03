@@ -20,7 +20,7 @@ const ProductLine = (props) => {
             <div className="product-line__card__img">
               <img src={product.ProductImg} alt="" />
               <div className="product-line__card__img__cart">
-                <button onClick={() => dispatch({type:"add_product" , payload: product})}>Add to cart</button>
+                <button onClick={() => dispatch({type:"add_product" , payload:{total: 1,product: product} })}>Add to cart</button>
               </div>
             </div>
             <div className="product-content">
