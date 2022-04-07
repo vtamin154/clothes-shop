@@ -5,7 +5,7 @@ import Pagination from '../components/Pagination';
 import Sidebar from '../components/Sidebar';
 import { ProductContextProvider } from '../components/ProductContext';
 
-const Catalog = () => {
+const Catalog = ({user}) => {
   const  { products }  = useContext(ProductContextProvider);
   const [productList, setProductList] = useState([]);
 
@@ -24,7 +24,7 @@ const Catalog = () => {
           </div>
           <div className="catalog__products col-lg-9">
             {/* <ProductLine data={productList} /> */}
-            <Pagination data = {productList.length > 0 ? productList : products}/>
+            <Pagination data = {productList.length > 0 ? productList : products} user = {user}/>
           </div>
         </div>
       </div>

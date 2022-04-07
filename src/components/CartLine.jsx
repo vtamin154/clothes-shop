@@ -2,11 +2,12 @@ import React, { useContext } from 'react';
 import { CartContext } from '../store/CartContext';
 import { BsPlusSquare, BsDashSquare } from 'react-icons/bs';
 import { FaTrashAlt } from 'react-icons/fa';
-const CartLine = () => {
+
+const CartLine = ({user}) => {
   const [state, dispatch] = useContext(CartContext);
   // console.log(state);
   return (
-    <div className="cart-line">
+    <div className="cart-line" user = {user}>
       <h2>Your cart</h2>
       <hr />
       {state.shoppingCart.length > 0 ? (

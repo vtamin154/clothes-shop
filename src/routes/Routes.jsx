@@ -6,15 +6,18 @@ import Cart from '../pages/Cart';
 import Product from '../pages/Product';
 import AddProducts from '../pages/admin/AddProducts';
 import CartLine from '../components/CartLine';
-
-const Routes = () => {
+import SignUp from '../components/SignUp';
+import Login from '../components/Login';
+const Routes = (props) => {
   return (
     <Switch>
-      <Route path="/" exact component={Home}></Route>
-      <Route path="/catalog/:slug" component={Product}></Route>
-      <Route path="/catalog" exact component={Catalog}></Route>
-      <Route path="/cart" exact component={Cart}></Route>
-      <Route path = "/addProducts" exact component={AddProducts}/>
+      <Route path="/" exact component={() => <Home user = {props.user}/>}></Route>
+      {/* <Route path="/catalog/:slug" component={Product}></Route> */}
+      <Route path="/catalog" exact component={() => <Catalog user={props.user}/>}></Route>
+      <Route path="/cart" exact component={() => <Cart user = {props.user} />}></Route>
+      <Route path = "/add-products" exact component={AddProducts}/>
+      <Route path='/sign-up' exact component={SignUp}/>
+      <Route path='/login' exact component={Login}/>
     </Switch>
   );
 }

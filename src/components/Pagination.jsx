@@ -43,7 +43,7 @@ function Pagination(props) {
   return (
     <div className="pagination">
       {/* <div className="row"> */}
-        <ProductLine
+        <ProductLine user = {props.user}
           data={productList.length > 0 ? productList : displayProducts}
         />
       {/* </div> */}

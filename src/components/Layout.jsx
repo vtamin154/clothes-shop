@@ -1,26 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 import Routes from '../routes/Routes';
 import ProductContext from './ProductContext';
 import  CartProvider  from '../store/CartContext';
+import { auth, db } from '../config/Config';
 // import Slider from './Slider';
 const Layout = () => {
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    auth.onAuthStateChanged(user => {
+      if(user){
+        db.collection('UserAccount').doc(user.uid).get().then(snapShot => {
+          // console.log(snapShot.data().UserName);
+          setUser(snapShot.data().UserName);
+        })
+      }
+      else{
+        setUser(null);
+      }
+    })
+  });
   return (
     <ProductContext>
       <CartProvider>
         <BrowserRouter>
           <Route
-            render={(props) => (
+            render={() => (
               <div>
-                <Header {...props} />
-                {/* <div> */}
+                <Header user = {user} />
                   <div className="main">
-                    <Routes />
+                    <Routes user = {user}/>
                     {/* <Slider /> */}
                   </div>
-                {/* </div> */}
                 <Footer />
               </div>
             )}

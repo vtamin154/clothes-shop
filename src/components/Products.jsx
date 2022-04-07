@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import ProductLine from './ProductLine';
 // import { ProductContextProvider } from './ProductContext';
 // import Aos from 'aos';
-const Products = () => {
+const Products = ({user}) => {
   // const { products } = useContext(ProductContextProvider);
   // const productList = products.slice(0, 10);
   //   console.log("Sp" , products);
@@ -14,7 +14,7 @@ const Products = () => {
   return (
     <div className="product container-fluid">
         <h1 >Sản phẩm nổi bật</h1>
-        <ProductLine/>
+        <ProductLine user = {user}/>
     </div>
   );
 };

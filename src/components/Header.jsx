@@ -1,23 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import logo from '../assets/clothes-img/logo.png';
-import {
-  AiOutlineShoppingCart,
-} from 'react-icons/ai';
+import { AiOutlineShoppingCart, AiOutlineUser } from 'react-icons/ai';
 
 import { Navbar, Container, Nav, Form, FormControl } from 'react-bootstrap';
+import { auth } from '../config/Config';
 const navBar = [
   { display: 'Trang chủ', path: '/' },
   { display: 'Cửa hàng', path: '/catalog' },
-  { display: 'Tài khoản', path: '/account' },
+  // { display: 'Tài khoản', path: '/account' },
   { display: 'Liên hệ', path: '/contact' },
 ];
 
-const Header = () => {
+const Header = (props) => {
   const navBarRef = useRef(null);
 
   useEffect(() => {
-    const handleScroll = () =>{
+    const handleScroll = () => {
       if (
         document.body.scrollTop > 50 ||
         document.documentElement.scrollTop > 50
@@ -26,13 +25,20 @@ const Header = () => {
       } else {
         navBarRef.current.classList.remove('shrink');
       }
-    }
+    };
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
+  const history = useHistory();
+
+  const logout = () => {
+    auth.signOut().then(() => {
+      history.push('/login');
+    })
+  }
   return (
     <div className="container-fluid header">
       <div className="row">
@@ -47,7 +53,7 @@ const Header = () => {
           <Container>
             <div className="d-flex header__left">
               <Navbar.Brand href="#home" className="fs-1">
-                <img className="logo" src={logo} />
+                <img className="logo" src={logo}/>
                 <span className="ps-3">Wendies</span>
               </Navbar.Brand>
               <Form className="d-flex header__left__item">
@@ -67,9 +73,19 @@ const Header = () => {
                     {item.display}
                   </Link>
                 ))}
+
+                {props.user ? (<Link className="px-3 link" to="account">
+                  {/* <img src="" alt="" /> */}
+                  <AiOutlineUser/>
+                    <span>{props.user}</span>
+                </Link>) : (<Link to="/login" className="px-3 link">Login</Link>)}
+
+                {props.user ? <Link className="px-3 link" onClick={logout}>Logout</Link> : ''}
+
                 <Link to="/cart" className="link">
                   <AiOutlineShoppingCart className="fs-1" />
                 </Link>
+
               </Nav>
             </Navbar.Collapse>
           </Container>

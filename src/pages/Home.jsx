@@ -12,14 +12,14 @@ import Style from '../components/Style';
 import Policy from '../components/Policy';
 import { ProductContextProvider } from '../components/ProductContext';
 
-const Home = () => {
+const Home = ({user}) => {
   const  { products }  = useContext(ProductContextProvider);
   // console.log("home", products); return [] - error
   return (
     <Helmet title="Trang chủ" className="container-fluid">
       <Slider control auto timeOut={5000} data = {sliderData} />
       <Advertise data = {advertise}/>
-      <Products data={products}/>
+      <Products data={products} user = {user}/>
       <About/>
       <NewProducts/>
       <Style/>
