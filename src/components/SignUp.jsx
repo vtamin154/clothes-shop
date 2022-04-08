@@ -17,10 +17,17 @@ const SignUp = (props) => {
           db.collection('UserAccount')
             .doc(cred.user.uid)
             .set({
+              // UserID: cred.user.uid,
               Name: name,
               UserName: userName,
               Email: email,
               Password: password,
+              Role: 'user',
+            })
+            .then(() => {
+              db.collection('Cart').add({
+                UserID: cred.user.uid,
+              });
             })
             .then(() => {
               setName('');
@@ -39,12 +46,18 @@ const SignUp = (props) => {
       <h2 className="text-center">Sign up</h2>
       <hr className="w-25 mx-auto" />
       <div className=" w-50 justify-content-center align-items-center mx-auto">
-        <form className="mx-auto" action="" onSubmit={signUp} autoComplete="off">
+        <form
+          className="mx-auto"
+          action=""
+          onSubmit={signUp}
+          autoComplete="off"
+        >
           <div className="form-outline mb-4">
             <label htmlFor="name" className="form-label">
               Name
             </label>
-            <input required
+            <input
+              required
               className="form-control form-control-lg"
               type="text"
               value={name}
@@ -56,7 +69,8 @@ const SignUp = (props) => {
             <label htmlFor="username" className="form-label">
               User name
             </label>
-            <input required
+            <input
+              required
               className="form-control form-control-lg"
               type="text"
               value={userName}
@@ -68,7 +82,8 @@ const SignUp = (props) => {
             <label htmlFor="email" className="form-label">
               Email
             </label>
-            <input required
+            <input
+              required
               className="form-control form-control-lg"
               type="text"
               value={email}
@@ -80,7 +95,8 @@ const SignUp = (props) => {
             <label htmlFor="password" className="form-label">
               Password
             </label>
-            <input required
+            <input
+              required
               className="form-control form-control-lg"
               type="password"
               value={password}
@@ -92,7 +108,8 @@ const SignUp = (props) => {
             <label htmlFor="repeat_password" className="form-label">
               Repeat password
             </label>
-            <input required
+            <input
+              required
               className="form-control form-control-lg"
               type="password"
               value={rePassword}
@@ -101,7 +118,7 @@ const SignUp = (props) => {
           </div>
 
           <br />
-         {error && <p className="text-danger">{error}</p>}
+          {error && <p className="text-danger">{error}</p>}
 
           <div className="d-flex justify-content-center">
             <button type="submit" className="btn btn-success btn-dark">

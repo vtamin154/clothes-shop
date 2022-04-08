@@ -74,10 +74,10 @@ const Header = (props) => {
                   </Link>
                 ))}
 
-                {props.user ? (<Link className="px-3 link" to="account">
+                {props.user ? (<Link className="px-3 link" to="/account">
                   {/* <img src="" alt="" /> */}
                   <AiOutlineUser/>
-                    <span>{props.user}</span>
+                    <span>{props.user.UserName}</span>
                 </Link>) : (<Link to="/login" className="px-3 link">Login</Link>)}
 
                 {props.user ? <Link className="px-3 link" onClick={logout}>Logout</Link> : ''}

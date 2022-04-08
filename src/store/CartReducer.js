@@ -1,3 +1,4 @@
+import { auth, db } from '../config/Config';
 const initState = {
   shoppingCart: [], // có nên cho mảng vào ko
   totalPrice: 0,
@@ -25,22 +26,37 @@ function cartReducer(state, action) {
         console.log('Product is already in your cart !');
         return state;
       } else {
-        // console.log(action.payload);
+        db.collection('Cart')
+          .where('UserID', '==', auth.currentUser.uid)
+          .get()
+          .then((snapshot) => {
+            snapshot.forEach((doc) => {
+              db.collection('Cart').doc(doc.id).collection('ProductList').add({
+                ProductID: action.payload.product.ProductID,
+                Total: action.payload.total,
+              });
+              // console.log(doc.id)
+            });
+          });
+
+        // db.collection("Cart").add({
+        //   UserID: action.user,
+        // }).then((doc) => {
+        //   db.collection("Cart").doc(doc.id).collection("ProductList").add({
+        //     ProductID: action.payload.product.ProductID,
+        //     Total: action.payload.total
+        //   })
+        // })
+
         return {
           shoppingCart: [...state.shoppingCart, action.payload],
           totalQuantity: state.totalQuantity + 1,
           totalPrice: state.totalPrice + action.payload.product.ProductPrice,
         };
       }
+
     case 'increase':
-      // product = action.payload;
-      // product.total += 1;
-      // index = state.shoppingCart.findIndex(
-      //   (itemCart) => itemCart.product.ProductID === product.product.ProductID
-      // );
-      // state.shoppingCart[index] = product;
       handleChangeTotal(state, action);
-      // console.log(state.shoppingCart[index]);
       return {
         shoppingCart: [...state.shoppingCart],
         totalQuantity: state.totalQuantity + 1,
@@ -48,15 +64,7 @@ function cartReducer(state, action) {
       };
 
     case 'decrease':
-      // product = action.payload;
-      // if(action.payload.total > 1){
-      // index = state.shoppingCart.findIndex(
-      //   (itemCart) => itemCart.product.ProductID === product.product.ProductID
-      // );
-      // state.shoppingCart[index] = product;
       handleChangeTotal(state, action);
-      // console.log(state.shoppingCart[index]);
-      // }
       return {
         shoppingCart: [...state.shoppingCart],
         totalQuantity: state.totalQuantity - 1,

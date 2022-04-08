@@ -3,12 +3,12 @@ import { CartContext } from '../store/CartContext';
 import { BsPlusSquare, BsDashSquare } from 'react-icons/bs';
 import { FaTrashAlt } from 'react-icons/fa';
 
-const CartLine = ({user}) => {
+const CartLine = (props) => {
   const [state, dispatch] = useContext(CartContext);
   // console.log(state);
   return (
-    <div className="cart-line" user = {user}>
-      <h2>Your cart</h2>
+    <div className="cart-line">
+      <h2 className="text-white text-center">Your cart</h2>
       <hr />
       {state.shoppingCart.length > 0 ? (
         state.shoppingCart.map((itemCart) => (
@@ -27,7 +27,7 @@ const CartLine = ({user}) => {
               <span>Đơn giá: {itemCart.product.ProductPrice} Đ</span>
             </div>
             <div className="col-md-3 cart-line__wrap__quantity my-auto">
-              <span onClick={() => dispatch({type:"increase", payload:{total: itemCart.total + 1, product:itemCart.product} })}>
+              <span onClick={() => dispatch({type:"increase", payload:{total: itemCart.total + 1, product:itemCart.product}})}>
                 <BsPlusSquare />
               </span>
 

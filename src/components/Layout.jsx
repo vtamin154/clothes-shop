@@ -4,24 +4,29 @@ import Header from './Header';
 import Footer from './Footer';
 import Routes from '../routes/Routes';
 import ProductContext from './ProductContext';
-import  CartProvider  from '../store/CartContext';
+import CartProvider from '../store/CartContext';
 import { auth, db } from '../config/Config';
 // import Slider from './Slider';
 const Layout = () => {
   const [user, setUser] = useState(null);
   useEffect(() => {
-    auth.onAuthStateChanged(user => {
-      if(user){
-        db.collection('UserAccount').doc(user.uid).get().then(snapShot => {
-          // console.log(snapShot.data().UserName);
-          setUser(snapShot.data().UserName);
-        })
-      }
-      else{
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        db.collection('UserAccount')
+          .doc(user.uid)
+          .get()
+          .then((snapShot) => {
+            setUser({
+              UserID: user.uid,
+              ...snapShot.data()
+            });
+            // console.log(user);
+          });
+      } else {
         setUser(null);
       }
-    })
-  });
+    });
+  },[]);
   return (
     <ProductContext>
       <CartProvider>
@@ -29,11 +34,11 @@ const Layout = () => {
           <Route
             render={() => (
               <div>
-                <Header user = {user} />
-                  <div className="main">
-                    <Routes user = {user}/>
-                    {/* <Slider /> */}
-                  </div>
+                <Header user={user} />
+                <div className="main">
+                  <Routes user={user} />
+                  {/* <Slider /> */}
+                </div>
                 <Footer />
               </div>
             )}

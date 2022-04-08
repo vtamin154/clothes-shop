@@ -12,7 +12,9 @@ const ProductLine = (props) => {
   const history = useHistory();
   const addToCart = (product) => {
     if(props.user){
-      dispatch({type:"add_product" , payload:{total: 1,product: product} })
+      // console.log(props.user);
+      // console.log(product);
+      dispatch({type:"add_product" , user: props.user.UserID, payload:{total: 1, product: product} })
     }
     else{
       auth.onAuthStateChanged(user => {
