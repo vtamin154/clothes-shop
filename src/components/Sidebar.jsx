@@ -8,6 +8,13 @@ const Sidebar = (props) => {
   // const { products } = useContext(ProductContextProvider);
   const products = props.data;
 
+  let category = [];
+  category = products
+    .map((product) => product.ProductCategory)
+    .filter((item) => {
+      return category.includes(item) ? '' : category.push(item);
+    });
+
   // console.log("sidebar",products);
 
   const handleCheck = (item) => {
@@ -27,18 +34,12 @@ const Sidebar = (props) => {
       listProduct = listProduct.filter(item => filterCategory.includes(item.ProductCategory));
     }
     props.receiveProducts(listProduct);
+    // console.log(listProduct);
   },[filterCategory]);
 
   useEffect(() =>{
     filterProducts();
   },[filterCategory]);
-
-  let category = [];
-  category = products
-    .map((product) => product.ProductCategory)
-    .filter((item) => {
-      return category.includes(item) ? '' : category.push(item);
-    });
 
   return (
     <div className="sidebar">

@@ -7,6 +7,38 @@ const initState = {
 
 let product;
 let index;
+
+// function getData() {
+//   let data = [];
+//   db.collection('Cart')
+//     .where('UserID', '==', auth.currentUser.uid)
+//     .get()
+//     .then((snapshot) => {
+//       snapshot.forEach((doc) => {
+//         db.collection('Cart')
+//           .doc(doc.id)
+//           .collection('ProductList')
+//           .get()
+//           .then((snap) => {
+//             snap.forEach((d) => {
+//               let item = d.data(); //product id, total
+//               if (item.ProductID) {
+//                 item.ProductID.get()
+//                   .then((res) => {
+//                     item.productData = res.data(); //pd infor
+//                     data.push({ total: item.Total, product: item.productData });
+//                   })
+//                   .catch((err) => console.log(err));
+//               }
+//               // console.log(data);
+//             });
+//           })
+//           .catch((err) => console.log(err));
+//       });
+//     });
+//   return data;
+// }
+
 const handleChangeTotal = (state, action) => {
   product = action.payload;
   index = state.shoppingCart.findIndex(
@@ -18,26 +50,29 @@ const handleChangeTotal = (state, action) => {
 function cartReducer(state, action) {
   switch (action.type) {
     case 'add_product':
-      const check = state.shoppingCart.find(
-        (product) =>
-          product.product.ProductID === action.payload.product.ProductID
-      );
-      if (check) {
-        console.log('Product is already in your cart !');
-        return state;
-      } else {
+      // const check = state.shoppingCart.find(
+      //   (product) =>
+      //     product.product.ProductID === action.payload.product.ProductID
+      // );
+      // if (check) {
+      //   console.log('Product is already in your cart !');
+      //   return state;
+      // } 
+      // else {
+
         db.collection('Cart')
           .where('UserID', '==', auth.currentUser.uid)
           .get()
           .then((snapshot) => {
             snapshot.forEach((doc) => {
               db.collection('Cart').doc(doc.id).collection('ProductList').add({
-                ProductID: action.payload.product.ProductID,
+                ProductID: db.doc('Products/' + action.payload.product.ProductID),
                 Total: action.payload.total,
               });
-              // console.log(doc.id)
+              console.log(doc.id)
             });
           });
+
 
         // db.collection("Cart").add({
         //   UserID: action.user,
@@ -48,12 +83,16 @@ function cartReducer(state, action) {
         //   })
         // })
 
+        // const test = data;
+        // console.log("data");
+
         return {
-          shoppingCart: [...state.shoppingCart, action.payload],
+          shoppingCart: [...state.shoppingCart, action.payload.product],
           totalQuantity: state.totalQuantity + 1,
           totalPrice: state.totalPrice + action.payload.product.ProductPrice,
         };
-      }
+
+      // }
 
     case 'increase':
       handleChangeTotal(state, action);

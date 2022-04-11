@@ -22,8 +22,6 @@ const Layout = () => {
             });
             // console.log(user);
           });
-      } else {
-        setUser(null);
       }
     });
   },[]);

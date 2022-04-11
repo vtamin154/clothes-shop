@@ -1,51 +1,123 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { db } from '../config/Config';
 import { CartContext } from '../store/CartContext';
 import { BsPlusSquare, BsDashSquare } from 'react-icons/bs';
 import { FaTrashAlt } from 'react-icons/fa';
 
-const CartLine = (props) => {
+const CartLine = ({ user }) => {
   const [state, dispatch] = useContext(CartContext);
-  // console.log(state);
+
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const getData = () => {
+      db.collection('Cart')
+        .where('UserID', '==', user.UserID)
+        .get()
+        .then((snapshot) => {
+          snapshot.forEach((doc) => {
+            db.collection('Cart')
+              .doc(doc.id)
+              .collection('ProductList')
+              .get()
+              .then((snap) => {
+                snap.forEach((d) => {
+                  let item = d.data(); //product id, total
+                  if (item.ProductID) {
+                    item.ProductID.get()
+                      .then((res) => {
+                        item.productData = res.data(); //product infor
+                        setProducts((pre) => [
+                          ...pre,
+                          {
+                            total: item.Total,
+                            product: item.productData,
+                          },
+                        ]);
+                      })
+                      .catch((err) => console.log(err));
+                  }
+                });
+              })
+              .catch((err) => console.log(err));
+          });
+        });
+    };
+    getData();
+  }, []);
+
   return (
     <div className="cart-line">
       <h2 className="text-white text-center">Your cart</h2>
       <hr />
-      {state.shoppingCart.length > 0 ? (
-        state.shoppingCart.map((itemCart) => (
-          itemCart!==null?
-          <div
-            className="row justify-content-center cart-line__wrap"
-            key={itemCart.product.ProductID}
-          >
-            <div className="col-md-2 cart-line__wrap__img">
-              <img src={itemCart.product.ProductImg} alt="" />
-            </div>
-            <div className="col-md-2 cart-line__wrap__name my-auto">
-              <span>{itemCart.product.ProductName}</span>
-            </div>
-            <div className="col-md-2 cart-line__wrap__price my-auto text-warning">
-              <span>Đơn giá: {itemCart.product.ProductPrice} Đ</span>
-            </div>
-            <div className="col-md-3 cart-line__wrap__quantity my-auto">
-              <span onClick={() => dispatch({type:"increase", payload:{total: itemCart.total + 1, product:itemCart.product}})}>
-                <BsPlusSquare />
-              </span>
+      {products.length > 0 ? (
+        products.map((itemCart, index) =>
+          itemCart !== null ? (
+            <div
+              className="row justify-content-center cart-line__wrap"
+              key={index}
+            >
+              <div className="col-md-2 cart-line__wrap__img">
+                <img src={itemCart.product.ProductImg} alt="" />
+              </div>
+              <div className="col-md-2 cart-line__wrap__name my-auto">
+                <span>{itemCart.product.ProductName}</span>
+              </div>
+              <div className="col-md-2 cart-line__wrap__price my-auto text-warning">
+                <span>Đơn giá: {itemCart.product.ProductPrice} Đ</span>
+              </div>
+              <div className="col-md-3 cart-line__wrap__quantity my-auto">
+                <span
+                  onClick={() =>
+                    dispatch({
+                      type: 'increase',
+                      payload: {
+                        total: itemCart.total + 1,
+                        product: itemCart.product,
+                      },
+                    })
+                  }
+                >
+                  <BsPlusSquare />
+                </span>
 
-              {itemCart.total}
+                {itemCart.total}
 
-              <span onClick={() => itemCart.total > 1?
-                dispatch({type:"decrease", payload: {total: itemCart.total-1, product: itemCart.product}}): ''}>
-                <BsDashSquare />
-              </span>
+                <span
+                  onClick={() =>
+                    itemCart.total > 1
+                      ? dispatch({
+                          type: 'decrease',
+                          payload: {
+                            total: itemCart.total - 1,
+                            product: itemCart.product,
+                          },
+                        })
+                      : ''
+                  }
+                >
+                  <BsDashSquare />
+                </span>
+              </div>
+              <div className="col-md-1 cart-line__wrap__remove my-auto">
+                <span
+                  className="text-danger"
+                  onClick={() =>
+                    dispatch({
+                      type: 'remove',
+                      payload: itemCart.product.ProductID,
+                    })
+                  }
+                >
+                  <FaTrashAlt />
+                </span>
+              </div>
+              <hr className="w-75 my-3" />
             </div>
-            <div className="col-md-1 cart-line__wrap__remove my-auto">
-              <span className="text-danger" onClick={() => dispatch({type:'remove',payload:itemCart.product.ProductID})}>
-                <FaTrashAlt />
-              </span>
-            </div>
-            <hr className="w-75 my-3" />
-          </div>
-        : ''))
+          ) : (
+            ''
+          )
+        )
       ) : (
         <h3>There are no products in the cart!</h3>
       )}
