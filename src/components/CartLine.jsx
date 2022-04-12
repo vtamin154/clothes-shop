@@ -6,10 +6,10 @@ import { FaTrashAlt } from 'react-icons/fa';
 
 const CartLine = ({ user }) => {
   const [state, dispatch] = useContext(CartContext);
-
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
+    // dispatch({type: 'show_products', payload:''});
     const getData = () => {
       db.collection('Cart')
         .where('UserID', '==', user.UserID)
@@ -32,6 +32,7 @@ const CartLine = ({ user }) => {
                           {
                             total: item.Total,
                             product: item.productData,
+                            productID: item.ProductID,
                           },
                         ]);
                       })
@@ -50,7 +51,7 @@ const CartLine = ({ user }) => {
     <div className="cart-line">
       <h2 className="text-white text-center">Your cart</h2>
       <hr />
-      {products.length > 0 ? (
+      {products ? (
         products.map((itemCart, index) =>
           itemCart !== null ? (
             <div
@@ -71,9 +72,11 @@ const CartLine = ({ user }) => {
                   onClick={() =>
                     dispatch({
                       type: 'increase',
+                      user: user.UserID,
                       payload: {
                         total: itemCart.total + 1,
                         product: itemCart.product,
+                        productID: itemCart.productID,
                       },
                     })
                   }
@@ -88,9 +91,11 @@ const CartLine = ({ user }) => {
                     itemCart.total > 1
                       ? dispatch({
                           type: 'decrease',
+                          user: user.UserID,
                           payload: {
                             total: itemCart.total - 1,
                             product: itemCart.product,
+                            productID: itemCart.productID,
                           },
                         })
                       : ''
@@ -121,7 +126,8 @@ const CartLine = ({ user }) => {
       ) : (
         <h3>There are no products in the cart!</h3>
       )}
-      {state.shoppingCart.length !== 0 && (
+
+      {products.length !== 0 && (
         <div className="row justify-content-center">
           <div className="col-md-4">
             <h3>Cart Summary</h3>

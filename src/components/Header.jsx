@@ -80,7 +80,7 @@ const Header = (props) => {
                     <span>{props.user.UserName}</span>
                 </Link>) : (<Link to="/login" className="px-3 link">Login</Link>)}
 
-                {props.user ? <Link className="px-3 link" onClick={logout}>Logout</Link> : ''}
+                {props.user ? <Link to="/login" className="px-3 link" onClick={logout}>Logout</Link> : ''}
 
                 <Link to="/cart" className="link">
                   <AiOutlineShoppingCart className="fs-1" />
