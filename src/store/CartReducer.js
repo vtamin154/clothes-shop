@@ -1,6 +1,6 @@
 import { auth, db } from '../config/Config';
 const initState = {
-  // shoppingCart: [],
+  shoppingCart: [],
   totalPrice: 0,
   totalQuantity: 0,
 };
@@ -8,43 +8,43 @@ const initState = {
 let product;
 let index;
 
-// function getData(uid) {
-//   let data = [];
-//   let sumQuantity = 0;
-//   let sumPrice = 0;
-//   db.collection('Cart')
-//     .where('UserID', '==', uid)
-//     .get()
-//     .then((snapshot) => {
-//       snapshot.forEach((doc) => {
-//         db.collection('Cart')
-//           .doc(doc.id)
-//           .collection('ProductList')
-//           .get()
-//           .then((snap) => {
-//             snap.forEach((d) => {
-//               let item = d.data(); //product id, total
-//               if (item.ProductID) {
-//                 item.ProductID.get()
-//                   .then((res) => {
-//                     item.productData = res.data(); //pd infor
-//                     data.push({ total: item.Total, product: item.productData });
-//                     // console.log("productData",item.productData);
-//                     sumQuantity += item.Total;
-//                     sumPrice += item.Total * item.productData.ProductPrice;
-//                     // console.log("quantity",sumQuantity)
-//                   })
-//                   .catch((err) => console.log(err));
-//               }
-//               // console.log(data);
-//             });
-//           })
-//           .catch((err) => console.log(err));
-//       });
-//     });
+function getData(uid) {
+  let data = [];
+  let sumQuantity = 0;
+  let sumPrice = 0;
+  db.collection('Cart')
+    .where('UserID', '==', uid)
+    .get()
+    .then((snapshot) => {
+      snapshot.forEach((doc) => {
+        db.collection('Cart')
+          .doc(doc.id)
+          .collection('ProductList')
+          .get()
+          .then((snap) => {
+            snap.forEach((d) => {
+              let item = d.data(); //product id, total
+              if (item.ProductID) {
+                item.ProductID.get()
+                  .then((res) => {
+                    item.productData = res.data(); //pd infor
+                    data.push({ total: item.Total, product: item.productData });
+                    // console.log("productData",item.productData);
+                    sumQuantity += item.Total;
+                    sumPrice += item.Total * item.productData.ProductPrice;
+                    // console.log("quantity",sumQuantity)
+                  })
+                  .catch((err) => console.log(err));
+              }
+              // console.log(data);
+            });
+          })
+          .catch((err) => console.log(err));
+      });
+    });
 
-//   return { data: data, totalPrice: sumPrice, totalQuantity: sumQuantity };
-// }
+  return { data: data, totalPrice: sumPrice, totalQuantity: sumQuantity };
+}
 
 const handleChangeTotal = (state, action) => {
   db.collection("Cart").where("UserID", "==", action.user).get().then((snapshot) => {
@@ -60,7 +60,7 @@ function cartReducer(state, action) {
   switch (action.type) {
     // case 'show_products':
     //   const cartLine = getData(auth.currentUser.uid);
-
+    //   console.log("cartLine",cartLine)
     //   return {
     //     shoppingCart: cartLine.data,
     //     totalQuantity: cartLine.totalQuantity,
@@ -115,7 +115,7 @@ function cartReducer(state, action) {
     case 'increase':
       handleChangeTotal(state, action);
       return {
-        // shoppingCart: [...state.shoppingCart],
+        // shoppingCart: getData(action.user),
         totalQuantity: state.totalQuantity + 1,
         totalPrice: state.totalPrice + action.payload.product.ProductPrice,
       };
@@ -128,20 +128,29 @@ function cartReducer(state, action) {
         totalPrice: state.totalPrice - action.payload.product.ProductPrice,
       };
 
-    // case 'remove':
-    //   index = state.shoppingCart.findIndex(
-    //     (item) => item.product.ProductID === action.payload
-    //   );
-    //   let newList = [...state.shoppingCart];
-    //   newList.splice(index, 1);
-    //   return {
-    //     shoppingCart: newList,
-    //     totalQuantity: state.totalQuantity - state.shoppingCart[index].total,
-    //     totalPrice:
-    //       state.totalPrice -
-    //       state.shoppingCart[index].total *
-    //         state.shoppingCart[index].product.ProductPrice,
-    //   };
+    case 'remove':
+      db.collection("Cart").where("UserID", "==", action.user).get().then(snapshot => {
+        snapshot.forEach(doc => {
+          db.collection("Cart").doc(doc.id).collection("ProductList").where("ProductID", "==", action.payload.productID).get().then(snap => snap.forEach(d => db.collection("Cart").doc(doc.id).collection("ProductList").doc(d.id).delete()))
+        })
+      })
+      // index = state.shoppingCart.findIndex(
+      //   (item) => item.product.ProductID === action.payload
+      // );
+      // let newList = [...state.shoppingCart];
+      // newList.splice(index, 1);
+      // return {
+      //   shoppingCart: newList,
+      //   totalQuantity: state.totalQuantity - state.shoppingCart[index].total,
+      //   totalPrice:
+      //     state.totalPrice -
+      //     state.shoppingCart[index].total *
+      //       state.shoppingCart[index].product.ProductPrice,
+      // };
+      return{
+        totalQuantity: state.totalQuantity - action.payload.total,
+        totalPrice: state.totalPrice - action.payload.product.ProductPrice * action.payload.total,
+      }
     default:
       throw new Error('Invalid action!');
   }

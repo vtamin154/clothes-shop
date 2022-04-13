@@ -7,7 +7,9 @@ import { FaTrashAlt } from 'react-icons/fa';
 const CartLine = ({ user }) => {
   const [state, dispatch] = useContext(CartContext);
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(0);
 
+  // console.log("shoppingCart",state.shoppingCart);
   useEffect(() => {
     // dispatch({type: 'show_products', payload:''});
     const getData = () => {
@@ -46,6 +48,10 @@ const CartLine = ({ user }) => {
     };
     getData();
   }, []);
+
+  // useEffect(() => {
+  //   setLoading(state.totalQuantity);
+  // }, [loading]);
 
   return (
     <div className="cart-line">
@@ -110,7 +116,12 @@ const CartLine = ({ user }) => {
                   onClick={() =>
                     dispatch({
                       type: 'remove',
-                      payload: itemCart.product.ProductID,
+                      user: user.UserID,
+                      payload: {
+                        total: itemCart.total,
+                        product: itemCart.product,
+                        productID: itemCart.productID,
+                      },
                     })
                   }
                 >
