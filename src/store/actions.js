@@ -1,5 +1,5 @@
-export const addProduct = (payload, user) =>({
-    type:"add_product",
-    user,
-    payload
-})
+// export const addProduct = (payload, user) =>({
+//     type:"add_product",
+//     user,
+//     payload
+// })

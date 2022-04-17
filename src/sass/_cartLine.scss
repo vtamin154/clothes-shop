@@ -21,6 +21,14 @@
                 display: inline-block;
             }
         }
+        &__checkbox{
+            padding-top: 2.7%;
+            font-size: 20px;
+            input{
+                margin-left: 20px;
+                cursor: pointer;
+            }
+        }
         &__name, &__price, &__quantity, &__remove{
             text-align: center;
             font-family: "Cabin", sans-serif;
@@ -29,6 +37,7 @@
                 font-weight: 200;
                 display: inline-block;
                 margin: 0px 20px;
+                cursor: pointer;
             }
         }
 

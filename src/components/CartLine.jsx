@@ -4,78 +4,141 @@ import { CartContext } from '../store/CartContext';
 import { BsPlusSquare, BsDashSquare } from 'react-icons/bs';
 import { FaTrashAlt } from 'react-icons/fa';
 
-const CartLine = ({ user }) => {
+const CartLine = ({ user, data }) => {
   const [state, dispatch] = useContext(CartContext);
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(0);
+  const [check, setCheck] = useState([]);
 
-  // console.log("shoppingCart",state.shoppingCart);
-  useEffect(() => {
-    // dispatch({type: 'show_products', payload:''});
-    const getData = () => {
-      db.collection('Cart')
-        .where('UserID', '==', user.UserID)
-        .get()
-        .then((snapshot) => {
-          snapshot.forEach((doc) => {
-            db.collection('Cart')
-              .doc(doc.id)
-              .collection('ProductList')
-              .get()
-              .then((snap) => {
-                snap.forEach((d) => {
-                  let item = d.data(); //product id, total
-                  if (item.ProductID) {
-                    item.ProductID.get()
-                      .then((res) => {
-                        item.productData = res.data(); //product infor
-                        setProducts((pre) => [
-                          ...pre,
-                          {
-                            total: item.Total,
-                            product: item.productData,
-                            productID: item.ProductID,
-                          },
-                        ]);
-                      })
-                      .catch((err) => console.log(err));
-                  }
-                });
-              })
-              .catch((err) => console.log(err));
-          });
-        });
-    };
-    getData();
-  }, []);
+  const handleCheck = (itemCart) =>{
+    setCheck(prev => {
+      const isCheck = check.includes(itemCart);
+      if(!isCheck){
+        return [...prev, itemCart];
+      }
+      else{
+        return check.filter(item => item !== itemCart);
+      }
+    })
+  }
+
+  const handleTotalQuantity = () => {
+    return check.length !== 0 && check.reduce((total, item) => total + item.total, 0)
+  }
+  const handleTotalAmount = () => {
+    return check.length !== 0 && check.reduce((total, item) => total + item.total * item.product.ProductPrice, 0)
+  }
+  const totalQuantity = handleTotalQuantity();
+  const totalPrice = handleTotalAmount();
+  
+  // const [products, setProducts] = useState([]);
+  // const [loading, setLoading] = useState([]);
+  // console.log(data);
+  // useEffect(() => {
+  //   // dispatch({ type: 'show_products', payload: '' });
+  //   // setProducts([]);
+  //   const getData = () => {
+  //     db.collection('Cart')
+  //       .where('UserID', '==', user.UserID)
+  //       .get()
+  //       .then((snapshot) => {
+  //         snapshot.forEach((doc) => {
+  //           db.collection('Cart')
+  //             .doc(doc.id)
+  //             .collection('ProductList')
+  //             .get()
+  //             .then((snap) => {
+  //               snap.forEach((d) => {
+  //                 let item = d.data(); //product id, total
+  //                 if (item.ProductID) {
+  //                   item.ProductID.get()
+  //                     .then((res) => {
+  //                       item.productData = res.data(); //product infor
+  //                       setProducts((pre) => [
+  //                         ...pre,
+  //                         {
+  //                           total: item.Total,
+  //                           product: item.productData,
+  //                           productID: item.ProductID,
+  //                         },
+  //                       ]);
+  //                     })
+  //                     .catch((err) => console.log(err));
+  //                 }
+  //               });
+  //             })
+  //             .catch((err) => console.log(err));
+  //         });
+  //       });
+  //   };
+  //   getData();
+  // }, []);
 
   // useEffect(() => {
-  //   setLoading(state.totalQuantity);
-  // }, [loading]);
+  //   setLoading(false);
+  // }, [state.totalQuantity]);
 
+  // const handleIncrease = (product) => {
+  //   db.collection('Cart')
+  //     .where('UserID', '==', user.UserID)
+  //     .get()
+  //     .then((snapshot) => {
+  //       snapshot.forEach((doc) => {
+  //         db.collection('Cart')
+  //           .doc(doc.id)
+  //           .collection('ProductList')
+  //           .where('ProductID', '==', product.productID)
+  //           .get()
+  //           .then((snap) =>
+  //             snap.forEach((d) => {
+  //               db.collection('Cart')
+  //                 .doc(doc.id)
+  //                 .collection('ProductList')
+  //                 .doc(d.id)
+  //                 .update({ Total: product.total +1});
+  //             })
+  //           );
+  //       });
+  //     });
+  // //   // handleChangeTotal(product);
+  // };
   return (
     <div className="cart-line">
       <h2 className="text-white text-center">Your cart</h2>
       <hr />
-      {products ? (
-        products.map((itemCart, index) =>
+      {data.length ? (
+        // itemCart = { total, product, productID}
+        data.map((itemCart, index) =>
           itemCart !== null ? (
             <div
               className="row justify-content-center cart-line__wrap"
               key={index}
             >
-              <div className="col-md-2 cart-line__wrap__img">
+
+              <div className="col-md-1 cart-line__wrap__checkbox">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  checked = {check.includes(itemCart)}
+                  value={itemCart.product}
+                  onChange={() => handleCheck(itemCart)}
+                ></input>
+              </div>
+
+              <div className="col-md-1 cart-line__wrap__img">
                 <img src={itemCart.product.ProductImg} alt="" />
               </div>
+
               <div className="col-md-2 cart-line__wrap__name my-auto">
                 <span>{itemCart.product.ProductName}</span>
               </div>
+
               <div className="col-md-2 cart-line__wrap__price my-auto text-warning">
                 <span>Đơn giá: {itemCart.product.ProductPrice} Đ</span>
               </div>
-              <div className="col-md-3 cart-line__wrap__quantity my-auto">
+
+              <div className="col-md-2 cart-line__wrap__quantity my-auto">
                 <span
-                  onClick={() =>
+                  onClick={() => {
+                    console.log('increase');
                     dispatch({
                       type: 'increase',
                       user: user.UserID,
@@ -84,8 +147,9 @@ const CartLine = ({ user }) => {
                         product: itemCart.product,
                         productID: itemCart.productID,
                       },
-                    })
-                  }
+                    });
+                    // handleIncrease(itemCart);
+                  }}
                 >
                   <BsPlusSquare />
                 </span>
@@ -110,6 +174,7 @@ const CartLine = ({ user }) => {
                   <BsDashSquare />
                 </span>
               </div>
+
               <div className="col-md-1 cart-line__wrap__remove my-auto">
                 <span
                   className="text-danger"
@@ -128,6 +193,7 @@ const CartLine = ({ user }) => {
                   <FaTrashAlt />
                 </span>
               </div>
+
               <hr className="w-75 my-3" />
             </div>
           ) : (
@@ -135,21 +201,21 @@ const CartLine = ({ user }) => {
           )
         )
       ) : (
-        <h3>There are no products in the cart!</h3>
+        <h3 className="ms-3">There are no products in the cart!</h3>
       )}
 
-      {products.length !== 0 && (
+      { (
         <div className="row justify-content-center">
           <div className="col-md-4">
             <h3>Cart Summary</h3>
             <hr />
-            <div>Total quantity: {state.totalQuantity}</div>
+            <div>Total quantity:{check.length > 0 ? totalQuantity : 0} </div>
             <div>
               Total price:
-              {state.totalPrice.toLocaleString('vi', {
+              {check.length > 0? totalPrice.toLocaleString('vi', {
                 style: 'currency',
                 currency: 'VND',
-              })}
+              }) : 0}
             </div>
           </div>
         </div>
