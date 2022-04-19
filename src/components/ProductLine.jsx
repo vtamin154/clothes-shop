@@ -12,7 +12,7 @@ const ProductLine = (props) => {
   const history = useHistory();
   const addToCart = (product) => {
     if(props.user){
-      dispatch({type:"add_product" , user: props.user.UserID, payload:{total: 1, product: product} })
+      dispatch({type:"add_product" , user: props.user.UserID, payload:{total: 1, product: product, productID: product.ProductID} })
     }
     else{
       // auth.onAuthStateChanged(user => {
@@ -34,7 +34,7 @@ const ProductLine = (props) => {
             <div className="product-line__card__img">
               <img src={product.ProductImg} alt="" />
               <div className="product-line__card__img__cart">
-                <button onClick={() => addToCart(product)}>Add to cart</button>
+                <button onClick={() => addToCart(product, product.ProductID)}>Add to cart</button>
               </div>
             </div>
 

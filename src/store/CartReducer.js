@@ -1,15 +1,13 @@
 import { auth, db } from '../config/Config';
 
 const initState = {
-  // shoppingCart: [],
-  totalPrice: 0,
-  totalQuantity: 0,
+  shoppingCart: [],
+  // listTotal:[]
+  // totalPrice: 0,
+  // totalQuantity: 0,
 };
 
-function getData(uid) {
-  let data = [];
-  let sumQuantity = 0;
-  let sumPrice = 0;
+export function getData(state, uid) {
   db.collection('Cart')
     .where('UserID', '==', uid)
     .get()
@@ -34,7 +32,7 @@ function getData(uid) {
                       ProductImg,
                     } = res.data();
 
-                    data.push({
+                    state.shoppingCart.push({
                       total: Total,
                       product: {
                         ProductName: ProductName,
@@ -42,11 +40,12 @@ function getData(uid) {
                         ProductPrice: ProductPrice,
                         ProductImg: ProductImg,
                       },
+                      productID: ProductID,
                     });
-                    // console.log('productData', ProductName);
-                    sumQuantity += Total;
-                    // sumPrice += item.Total * item.productData.ProductPrice;
-                    // console.log("quantity",sumQuantity)
+                    
+                    console.log('state', state.shoppingCart);
+                    // state.totalQuantity += Total;
+                    // state.totalPrice += Total * ProductPrice
                   })
                   .catch((err) => console.log(err));
               }
@@ -57,53 +56,40 @@ function getData(uid) {
       });
     });
 
-  // sumQuantity = data.reduce((total, curVal) => total+curVal.total)
-  // console.log(data)
-  console.log('sumQuantity', sumQuantity);
-  // const {data, totalQuantity, totalPrice};
-  return { data, totalPrice: sumPrice, totalQuantity: sumQuantity };
+  return state;
 }
 
 const handleChangeTotal = (state, action) => {
   db.collection('Cart')
-    .where('UserID', '==', action.user)
+    .where('UserID', '==', action.userID)
     .get()
     .then((snapshot) => {
       snapshot.forEach((doc) => {
+        // console.log(doc);
         db.collection('Cart')
           .doc(doc.id)
           .collection('ProductList')
           .where('ProductID', '==', action.payload.productID)
           .get()
-          .then((snap) =>
+          .then((snap) => {
             snap.forEach((d) => {
               db.collection('Cart')
                 .doc(doc.id)
                 .collection('ProductList')
                 .doc(d.id)
-                .update({ Total: action.payload.total});
-            })
-          );
+                .update({ Total: action.payload.total });
+            });
+            let index = state.shoppingCart.findIndex(item => item.productID === action.payload.productID)
+            state.shoppingCart[index].total = action.payload.total;
+          });
       });
     });
-  return {
-    totalQuantity: state.totalQuantity + 1,
-    totalPrice: state.totalPrice + action.payload.product.ProductPrice,
-  };
+  return state.shoppingCart;
+
 };
 
 function cartReducer(state, action) {
   switch (action.type) {
-    // case 'show_products':
-    //   const cartLine = getData(auth.currentUser.uid);
-    //   // console.log('cartLine', cartLine);
-    //   const { data, totalQuantity, totalPrice } = cartLine;
-    //   console.log(data);
-    //   return {
-    //     shoppingCart: data,
-    //     totalQuantity: totalQuantity,
-    //     totalPrice: totalPrice,
-    //   };
     case 'add_product':
       // const check = state.shoppingCart.find(
       //   (product) =>
@@ -142,30 +128,30 @@ function cartReducer(state, action) {
       //   })
       // })
       return {
-        // shoppingCart: [...state.shoppingCart, action.payload.product],
-        totalQuantity: state.totalQuantity + 1,
-        totalPrice: state.totalPrice + action.payload.product.ProductPrice,
+        shoppingCart: [...state.shoppingCart, {
+          total: action.payload.total,
+          product: {
+            ...action.payload.product
+          },
+          productID: action.payload.productID,
+        }],
       };
 
     // }
 
     case 'increase':
-      return handleChangeTotal(state, action);
-      // const cartLine = getData(action.user);
-      // console.log(cartLine);
-      // return {
-      //   // shoppingCart: getData(action.user),
-      //   totalQuantity: state.totalQuantity + 1,
-      //   totalPrice: state.totalPrice + action.payload.product.ProductPrice,
-      // };
+      const increaseCart = handleChangeTotal(state, action);
+      return {
+        ...state,
+        shoppingCart: increaseCart
+      }
 
     case 'decrease':
-      return handleChangeTotal(state, action);
-      // return {
-      //   // shoppingCart: [...state.shoppingCart],
-      //   totalQuantity: state.totalQuantity - 1,
-      //   totalPrice: state.totalPrice - action.payload.product.ProductPrice,
-      // };
+      const decreaseCart = handleChangeTotal(state, action);
+      return {
+        ...state,
+        shoppingCart: decreaseCart
+      }
 
     case 'remove':
       db.collection('Cart')

@@ -4,10 +4,10 @@ import { CartContext } from '../store/CartContext';
 import { BsPlusSquare, BsDashSquare } from 'react-icons/bs';
 import { FaTrashAlt } from 'react-icons/fa';
 
-const CartLine = ({ user, data }) => {
+const CartLine = ({ user }) => {
   const [state, dispatch] = useContext(CartContext);
   const [check, setCheck] = useState([]);
-
+  // console.log(state);
   const handleCheck = (itemCart) =>{
     setCheck(prev => {
       const isCheck = check.includes(itemCart);
@@ -28,48 +28,51 @@ const CartLine = ({ user, data }) => {
   }
   const totalQuantity = handleTotalQuantity();
   const totalPrice = handleTotalAmount();
-  
+
+  // const handleIncrease = (product) =>{
+  //   handleChangeTotal(product);
+  // }
   // const [products, setProducts] = useState([]);
   // const [loading, setLoading] = useState([]);
   // console.log(data);
   // useEffect(() => {
-  //   // dispatch({ type: 'show_products', payload: '' });
-  //   // setProducts([]);
-  //   const getData = () => {
-  //     db.collection('Cart')
-  //       .where('UserID', '==', user.UserID)
-  //       .get()
-  //       .then((snapshot) => {
-  //         snapshot.forEach((doc) => {
-  //           db.collection('Cart')
-  //             .doc(doc.id)
-  //             .collection('ProductList')
-  //             .get()
-  //             .then((snap) => {
-  //               snap.forEach((d) => {
-  //                 let item = d.data(); //product id, total
-  //                 if (item.ProductID) {
-  //                   item.ProductID.get()
-  //                     .then((res) => {
-  //                       item.productData = res.data(); //product infor
-  //                       setProducts((pre) => [
-  //                         ...pre,
-  //                         {
-  //                           total: item.Total,
-  //                           product: item.productData,
-  //                           productID: item.ProductID,
-  //                         },
-  //                       ]);
-  //                     })
-  //                     .catch((err) => console.log(err));
-  //                 }
-  //               });
-  //             })
-  //             .catch((err) => console.log(err));
-  //         });
-  //       });
-  //   };
-  //   getData();
+  //   dispatch({ type: 'show_products', payload: {userID:user.UserID} });
+    // setProducts([]);
+    // const getData = () => {
+    //   db.collection('Cart')
+    //     .where('UserID', '==', user.UserID)
+    //     .get()
+    //     .then((snapshot) => {
+    //       snapshot.forEach((doc) => {
+    //         db.collection('Cart')
+    //           .doc(doc.id)
+    //           .collection('ProductList')
+    //           .get()
+    //           .then((snap) => {
+    //             snap.forEach((d) => {
+    //               let item = d.data(); //product id, total
+    //               if (item.ProductID) {
+    //                 item.ProductID.get()
+    //                   .then((res) => {
+    //                     item.productData = res.data(); //product infor
+    //                     setProducts((pre) => [
+    //                       ...pre,
+    //                       {
+    //                         total: item.Total,
+    //                         product: item.productData,
+    //                         productID: item.ProductID,
+    //                       },
+    //                     ]);
+    //                   })
+    //                   .catch((err) => console.log(err));
+    //               }
+    //             });
+    //           })
+    //           .catch((err) => console.log(err));
+    //       });
+    //     });
+    // };
+    // getData();
   // }, []);
 
   // useEffect(() => {
@@ -104,9 +107,9 @@ const CartLine = ({ user, data }) => {
     <div className="cart-line">
       <h2 className="text-white text-center">Your cart</h2>
       <hr />
-      {data.length ? (
+      {state.shoppingCart ? (
         // itemCart = { total, product, productID}
-        data.map((itemCart, index) =>
+        state.shoppingCart.map((itemCart, index) =>
           itemCart !== null ? (
             <div
               className="row justify-content-center cart-line__wrap"
@@ -141,14 +144,13 @@ const CartLine = ({ user, data }) => {
                     console.log('increase');
                     dispatch({
                       type: 'increase',
-                      user: user.UserID,
+                      userID: user.UserID,
                       payload: {
                         total: itemCart.total + 1,
                         product: itemCart.product,
                         productID: itemCart.productID,
                       },
                     });
-                    // handleIncrease(itemCart);
                   }}
                 >
                   <BsPlusSquare />
@@ -161,7 +163,7 @@ const CartLine = ({ user, data }) => {
                     itemCart.total > 1
                       ? dispatch({
                           type: 'decrease',
-                          user: user.UserID,
+                          userID: user.UserID,
                           payload: {
                             total: itemCart.total - 1,
                             product: itemCart.product,
