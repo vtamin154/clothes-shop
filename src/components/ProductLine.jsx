@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import {useHistory} from 'react-router-dom';
 import { ProductContextProvider } from './ProductContext';
 import { CartContext } from '../store/CartContext';
-import { auth } from '../config/Config';
+
 const ProductLine = (props) => {
   const { products } = useContext(ProductContextProvider);
   const data = props.data;

@@ -10,10 +10,10 @@ const Catalog = ({user}) => {
   const [productList, setProductList] = useState([]);
 
   // console.log('parent', products);
-  // console.log('parent2', productList);
   const receiveProducts = (data) => {
     setProductList(data);
   };
+  // console.log('parent2', productList);
 
   return (
     <Helmet title="Cửa hàng">

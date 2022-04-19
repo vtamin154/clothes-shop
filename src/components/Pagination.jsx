@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+
 import ProductLine from './ProductLine';
 
 // Pagination.propTypes = {
@@ -17,13 +17,13 @@ function Pagination(props) {
     pageVisited * productPerPage - 12,
     pageVisited * productPerPage
   );
-  // console.log(displayProducts);
-  // console.log("prLine", props.data);
-
+  // console.log("displayPr",displayProducts);
+  // console.log("prLine1", productList);
   useEffect(() => {
     setProductList(displayProducts);
   }, [pageNumber]);
-
+  
+  // console.log("prLine2", productList);
   const handleNext = () => {
     if (pageNumber < Math.ceil(props.data.length / productPerPage)) {
       setPageNumber(pageNumber + 1);
@@ -44,7 +44,7 @@ function Pagination(props) {
     <div className="pagination">
       {/* <div className="row"> */}
         <ProductLine user = {props.user}
-          data={productList.length > 0 ? productList : displayProducts}
+          data={ displayProducts}
         />
       {/* </div> */}
       {/* <div className="row"> */}
