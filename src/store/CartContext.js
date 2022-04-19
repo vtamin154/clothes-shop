@@ -5,7 +5,7 @@ export const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initState);
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -13,13 +13,13 @@ const CartProvider = ({ children }) => {
           .doc(user.uid)
           .get()
           .then((snapShot) => {
-            setUser({
-              UserID: user.uid,
-              ...snapShot.data()
-            });
+            // setUser({
+            //   UserID: user.uid,
+            //   ...snapShot.data()
+            // });
             // console.log(user);
+            getData(state, user.uid);
           });
-          getData(state, user.uid);
       }
     });
   },[]);

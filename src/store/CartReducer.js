@@ -42,10 +42,8 @@ export function getData(state, uid) {
                       },
                       productID: ProductID,
                     });
-                    
-                    console.log('state', state.shoppingCart);
-                    // state.totalQuantity += Total;
-                    // state.totalPrice += Total * ProductPrice
+        
+                    // console.log('state', state.shoppingCart);
                   })
                   .catch((err) => console.log(err));
               }
@@ -154,6 +152,7 @@ function cartReducer(state, action) {
       }
 
     case 'remove':
+      const newShoppingCart = [...state.shoppingCart];
       db.collection('Cart')
         .where('UserID', '==', action.user)
         .get()
@@ -165,7 +164,8 @@ function cartReducer(state, action) {
               .where('ProductID', '==', action.payload.productID)
               .get()
               .then((snap) =>
-                snap.forEach((d) =>
+                {
+                  snap.forEach((d) =>
                   db
                     .collection('Cart')
                     .doc(doc.id)
@@ -173,14 +173,15 @@ function cartReducer(state, action) {
                     .doc(d.id)
                     .delete()
                 )
+              }
               );
           });
         });
+        let index = state.shoppingCart.findIndex(item => item.productID === action.payload.productID)
+        newShoppingCart.splice(index, 1);
+        console.log(newShoppingCart)
       return {
-        totalQuantity: state.totalQuantity - action.payload.total,
-        totalPrice:
-          state.totalPrice -
-          action.payload.product.ProductPrice * action.payload.total,
+        shoppingCart: [...newShoppingCart]
       };
     default:
       throw new Error('Invalid action!');
