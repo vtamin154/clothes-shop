@@ -1,0 +1,119 @@
+.contact{
+    &__cover{
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 90px;
+        &__contactInfor{
+            background-color: $main-bg;
+            color: $txt-white;
+            position: relative;
+            z-index: 99;
+   
+            left: 5%;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+
+            font-size: 17px;
+            font-family: "Alata", sans-serif;
+            align-items: center;
+            line-height: 30px;
+
+            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+
+            h2{
+                font-size: 33px;
+                @include tablet{
+                    font-size: 27px;
+                }
+            }
+            .social{
+                margin-top: 50px;
+                font-size: 24px;
+                @include tablet{
+                    margin-top: 30px;
+                }
+            }
+            @include tablet{
+                font-size: 14px;
+                div{
+                    margin-left: 10px;
+                }
+            }
+
+            @include mobile{
+                display: none;
+            }
+        }
+        &__mess{
+            position: relative;
+            left: -5%;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            h2, form{
+                margin-left: 25%;
+                margin-top: 10%;
+            }
+            h2{
+                font-size: 33px;
+                @include tablet{
+                    font-size: 27px;
+                }
+            }
+            form{
+                margin-top: 5%;
+                margin-bottom: 10%;
+                width: 90%;
+            }
+            
+            input, textarea{
+                line-height: 30px;
+                margin-top: 10px;
+                border: none;
+                border-bottom: 1px solid rgb(41, 41, 41);
+
+                outline: none;
+            }
+            label, input, textarea{
+                font-size: 16px;
+                font-family: "Alata" ,sans-serif;
+            }
+            input{
+                display: inline-block;
+                margin-right: 14%;
+                width: 30%;
+            }
+            textarea{
+                width: 74%;
+            }
+            button{
+                display: block;
+                background-color: $main-bg;
+                color: $txt-white;
+                padding: 8px 27px;
+
+                font-size: 16px;
+                border: none;
+            }
+            button:hover{
+                background-color: rgb(12, 12, 12);
+            }
+
+            @include tablet{
+                label, input, textarea, button{
+                    font-size: 14px;
+                }
+            }
+            @include mobile{
+                left: 0;
+                form{
+                    margin-left: auto;
+                }
+                input, textarea{
+                display: block;
+                margin-top: 20px;
+                width: 90%;
+                }
+            }
+        }
+    }
+}

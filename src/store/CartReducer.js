@@ -42,7 +42,7 @@ export function getData(state, uid) {
                       },
                       productID: ProductID,
                     });
-        
+
                     // console.log('state', state.shoppingCart);
                   })
                   .catch((err) => console.log(err));
@@ -77,13 +77,14 @@ const handleChangeTotal = (state, action) => {
                 .doc(d.id)
                 .update({ Total: action.payload.total });
             });
-            let index = state.shoppingCart.findIndex(item => item.productID === action.payload.productID)
+            let index = state.shoppingCart.findIndex(
+              (item) => item.productID === action.payload.productID
+            );
             state.shoppingCart[index].total = action.payload.total;
           });
       });
     });
   return state.shoppingCart;
-
 };
 
 function cartReducer(state, action) {
@@ -103,36 +104,45 @@ function cartReducer(state, action) {
         .where('UserID', '==', auth.currentUser.uid)
         .get()
         .then((snapshot) => {
-          snapshot.forEach((doc) => {
-            db.collection('Cart')
-              .doc(doc.id)
-              .collection('ProductList')
-              .add({
-                ProductID: db.doc(
-                  'Products/' + action.payload.product.ProductID
-                ),
-                Total: action.payload.total,
-              });
-            // console.log(doc.id);
-          });
-        });
+          db.collection('Cart')
+            .doc(snapshot.docs[0].id)
+            .collection('ProductList')
+            .add({
+              ProductID: db.doc('Products/' + action.payload.product.ProductID),
+              Total: action.payload.total
+            });
+        })
 
-      // db.collection("Cart").add({
-      //   UserID: action.user,
-      // }).then((doc) => {
-      //   db.collection("Cart").doc(doc.id).collection("ProductList").add({
-      //     ProductID: action.payload.product.ProductID,
-      //     Total: action.payload.total
-      //   })
-      // })
+      //add data twice
+      // db.collection('Cart')
+      //   .where('UserID', '==', auth.currentUser.uid)
+      //   .get()
+      //   .then((snapshot) => {
+      //     snapshot.forEach((doc) => {
+      //       db.collection('Cart')
+      //         .doc(doc.id)
+      //         .collection('ProductList')
+      //         .add({
+      //           ProductID: db.doc(
+      //             'Products/' + action.payload.product.ProductID
+      //           ),
+      //           Total: action.payload.total,
+      //         });
+      //       console.log(doc.id);
+      //     });
+      //   });
+
       return {
-        shoppingCart: [...state.shoppingCart, {
-          total: action.payload.total,
-          product: {
-            ...action.payload.product
+        shoppingCart: [
+          ...state.shoppingCart,
+          {
+            total: action.payload.total,
+            product: {
+              ...action.payload.product,
+            },
+            productID: action.payload.productID,
           },
-          productID: action.payload.productID,
-        }],
+        ],
       };
 
     // }
@@ -141,15 +151,15 @@ function cartReducer(state, action) {
       const increaseCart = handleChangeTotal(state, action);
       return {
         ...state,
-        shoppingCart: increaseCart
-      }
+        shoppingCart: increaseCart,
+      };
 
     case 'decrease':
       const decreaseCart = handleChangeTotal(state, action);
       return {
         ...state,
-        shoppingCart: decreaseCart
-      }
+        shoppingCart: decreaseCart,
+      };
 
     case 'remove':
       const newShoppingCart = [...state.shoppingCart];
@@ -163,25 +173,25 @@ function cartReducer(state, action) {
               .collection('ProductList')
               .where('ProductID', '==', action.payload.productID)
               .get()
-              .then((snap) =>
-                {
-                  snap.forEach((d) =>
+              .then((snap) => {
+                snap.forEach((d) =>
                   db
                     .collection('Cart')
                     .doc(doc.id)
                     .collection('ProductList')
                     .doc(d.id)
                     .delete()
-                )
-              }
-              );
+                );
+              });
           });
         });
-        let index = state.shoppingCart.findIndex(item => item.productID === action.payload.productID)
-        newShoppingCart.splice(index, 1);
-        console.log(newShoppingCart)
+      let index = state.shoppingCart.findIndex(
+        (item) => item.productID === action.payload.productID
+      );
+      newShoppingCart.splice(index, 1);
+      console.log(newShoppingCart);
       return {
-        shoppingCart: [...newShoppingCart]
+        shoppingCart: [...newShoppingCart],
       };
     default:
       throw new Error('Invalid action!');

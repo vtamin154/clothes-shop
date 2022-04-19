@@ -13,7 +13,7 @@ const Footer = () => {
             <FaMapMarkerAlt /> <span>Km10 Nguyễn Trãi, Hà Đông, Hà Nội</span>
           </div>
           <div>
-            <FiMail /> <span>wedies@gmail.com</span>
+            <FiMail /> <span>wendies@gmail.com</span>
           </div>
           <div>
             <AiFillPhone />
