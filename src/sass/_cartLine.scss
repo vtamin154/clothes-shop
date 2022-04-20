@@ -40,6 +40,31 @@
                 cursor: pointer;
             }
         }
+        &__summary{
+            .cover{
+                padding: 0px 0 20px 0;
+                border: 1px solid rgba($color: #000000, $alpha: 0.1);
+            }
+            
+            h3{
+                width: 100%;
+                background-color: rgba($color: #000000, $alpha: 0.1);
+                line-height: 50px;
+            }
+            .button{
+                display: inline-block;
+                background-color: $main-bg;
+                color: $txt-white;
+                border: none;
+                padding: 10px 25px;
+
+                text-decoration: none;
+                margin-top: 20px;
+                &:hover{
+                    background-color: #000000;
+                }
+            }
+        }
 
     }
 }

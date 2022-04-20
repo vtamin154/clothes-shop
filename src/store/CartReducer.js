@@ -109,9 +109,9 @@ function cartReducer(state, action) {
             .collection('ProductList')
             .add({
               ProductID: db.doc('Products/' + action.payload.product.ProductID),
-              Total: action.payload.total
+              Total: action.payload.total,
             });
-        })
+        });
 
       //add data twice
       // db.collection('Cart')
@@ -189,9 +189,68 @@ function cartReducer(state, action) {
         (item) => item.productID === action.payload.productID
       );
       newShoppingCart.splice(index, 1);
-      console.log(newShoppingCart);
+      // console.log(newShoppingCart);
       return {
         shoppingCart: [...newShoppingCart],
+      };
+
+    case 'cashout':
+      db.collection('Orders')
+        .add({
+          Amount: action.payload.amount,
+          UserID: action.userID,
+        })
+        .then((doc) => {
+          action.payload.listProduct.forEach((item) => {
+            db.collection('Orders')
+              .doc(doc.id)
+              .collection('ListItem')
+              .add({
+                ProductID: db.doc('Products/' + item.productID.id),
+                Total: item.total,
+              });
+          });
+        });
+
+      db.collection('Cart')
+        .where('UserID', '==', action.userID)
+        .get()
+        .then((snapshot) =>
+          // console.log(snapshot.docs)
+          action.payload.listProduct.forEach((item) =>
+            db
+              .collection('Cart')
+              .doc(snapshot.docs[0].id)
+              .collection('ProductList')
+              .where('ProductID', '==', item.productID)
+              .get()
+              .then((snap) => {
+                snap.forEach((d) =>
+                  db
+                    .collection('Cart')
+                    .doc(snapshot.docs[0].id)
+                    .collection('ProductList')
+                    .doc(d.id)
+                    .delete()
+                );
+              })
+          )
+        );
+      //error
+      // action.payload.listProduct.forEach(item => {
+      //   newList = state.shoppingCart.filter(i => i.productID !== item.productID)
+      //   console.log(newList)
+      // })
+
+      let newList = state.shoppingCart.filter((item) => {
+        return !action.payload.listProduct.some(
+          (i) => i.productID === item.productID
+        );
+      });
+
+      // console.log(newList);
+      return {
+        shoppingCart: [...newList],
       };
     default:
       throw new Error('Invalid action!');

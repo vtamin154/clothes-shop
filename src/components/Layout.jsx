@@ -18,13 +18,13 @@ const Layout = () => {
           .then((snapShot) => {
             setUser({
               UserID: user.uid,
-              ...snapShot.data()
+              ...snapShot.data(),
             });
             // console.log(user);
           });
       }
     });
-  },[]);
+  }, []);
   return (
     <ProductContext>
       <CartProvider>

@@ -48,7 +48,7 @@ const Login = (props) => {
           <br />
 
           <div className="d-flex justify-content-center">
-            <button type="submit" className="btn btn-success btn-dark">
+            <button type="submit" className="btn btn-success btn-dark py-2 px-4 mb-3">
               Login
             </button>
           </div>

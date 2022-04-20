@@ -1,31 +1,40 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { db } from '../config/Config';
+import { Link } from 'react-router-dom';
+
 import { CartContext } from '../store/CartContext';
 import { BsPlusSquare, BsDashSquare } from 'react-icons/bs';
 import { FaTrashAlt } from 'react-icons/fa';
+import Cashout from '../components/Cashout';
 
-const CartLine = ({ user }) => {
+const CartLine = (props) => {
   const [state, dispatch] = useContext(CartContext);
   const [check, setCheck] = useState([]);
   // console.log(state);
-  const handleCheck = (itemCart) =>{
-    setCheck(prev => {
+  const handleCheck = (itemCart) => {
+    setCheck((prev) => {
       const isCheck = check.includes(itemCart);
-      if(!isCheck){
+      if (!isCheck) {
         return [...prev, itemCart];
+      } else {
+        return check.filter((item) => item !== itemCart);
       }
-      else{
-        return check.filter(item => item !== itemCart);
-      }
-    })
-  }
+    });
+  };
 
   const handleTotalQuantity = () => {
-    return check.length !== 0 && check.reduce((total, item) => total + item.total, 0)
-  }
+    return (
+      check.length !== 0 && check.reduce((total, item) => total + item.total, 0)
+    );
+  };
   const handleTotalAmount = () => {
-    return check.length !== 0 && check.reduce((total, item) => total + item.total * item.product.ProductPrice, 0)
-  }
+    return (
+      check.length !== 0 &&
+      check.reduce(
+        (total, item) => total + item.total * item.product.ProductPrice,
+        0
+      )
+    );
+  };
   const totalQuantity = handleTotalQuantity();
   const totalPrice = handleTotalAmount();
 
@@ -37,42 +46,42 @@ const CartLine = ({ user }) => {
   // console.log(data);
   // useEffect(() => {
   //   dispatch({ type: 'show_products', payload: {userID:user.UserID} });
-    // setProducts([]);
-    // const getData = () => {
-    //   db.collection('Cart')
-    //     .where('UserID', '==', user.UserID)
-    //     .get()
-    //     .then((snapshot) => {
-    //       snapshot.forEach((doc) => {
-    //         db.collection('Cart')
-    //           .doc(doc.id)
-    //           .collection('ProductList')
-    //           .get()
-    //           .then((snap) => {
-    //             snap.forEach((d) => {
-    //               let item = d.data(); //product id, total
-    //               if (item.ProductID) {
-    //                 item.ProductID.get()
-    //                   .then((res) => {
-    //                     item.productData = res.data(); //product infor
-    //                     setProducts((pre) => [
-    //                       ...pre,
-    //                       {
-    //                         total: item.Total,
-    //                         product: item.productData,
-    //                         productID: item.ProductID,
-    //                       },
-    //                     ]);
-    //                   })
-    //                   .catch((err) => console.log(err));
-    //               }
-    //             });
-    //           })
-    //           .catch((err) => console.log(err));
-    //       });
-    //     });
-    // };
-    // getData();
+  // setProducts([]);
+  // const getData = () => {
+  //   db.collection('Cart')
+  //     .where('UserID', '==', user.UserID)
+  //     .get()
+  //     .then((snapshot) => {
+  //       snapshot.forEach((doc) => {
+  //         db.collection('Cart')
+  //           .doc(doc.id)
+  //           .collection('ProductList')
+  //           .get()
+  //           .then((snap) => {
+  //             snap.forEach((d) => {
+  //               let item = d.data(); //product id, total
+  //               if (item.ProductID) {
+  //                 item.ProductID.get()
+  //                   .then((res) => {
+  //                     item.productData = res.data(); //product infor
+  //                     setProducts((pre) => [
+  //                       ...pre,
+  //                       {
+  //                         total: item.Total,
+  //                         product: item.productData,
+  //                         productID: item.ProductID,
+  //                       },
+  //                     ]);
+  //                   })
+  //                   .catch((err) => console.log(err));
+  //               }
+  //             });
+  //           })
+  //           .catch((err) => console.log(err));
+  //       });
+  //     });
+  // };
+  // getData();
   // }, []);
 
   // useEffect(() => {
@@ -115,12 +124,11 @@ const CartLine = ({ user }) => {
               className="row justify-content-center cart-line__wrap"
               key={index}
             >
-
               <div className="col-md-1 cart-line__wrap__checkbox">
                 <input
                   className="form-check-input"
                   type="checkbox"
-                  checked = {check.includes(itemCart)}
+                  checked={check.includes(itemCart)}
                   value={itemCart.product}
                   onChange={() => handleCheck(itemCart)}
                 ></input>
@@ -141,10 +149,10 @@ const CartLine = ({ user }) => {
               <div className="col-md-2 cart-line__wrap__quantity my-auto">
                 <span
                   onClick={() => {
-                    console.log('increase');
+                    // console.log('increase');
                     dispatch({
                       type: 'increase',
-                      userID: user.UserID,
+                      userID: props.user.UserID,
                       payload: {
                         total: itemCart.total + 1,
                         product: itemCart.product,
@@ -163,7 +171,7 @@ const CartLine = ({ user }) => {
                     itemCart.total > 1
                       ? dispatch({
                           type: 'decrease',
-                          userID: user.UserID,
+                          userID: props.user.UserID,
                           payload: {
                             total: itemCart.total - 1,
                             product: itemCart.product,
@@ -183,7 +191,7 @@ const CartLine = ({ user }) => {
                   onClick={() =>
                     dispatch({
                       type: 'remove',
-                      user: user.UserID,
+                      user: props.user.UserID,
                       payload: {
                         total: itemCart.total,
                         product: itemCart.product,
@@ -206,22 +214,42 @@ const CartLine = ({ user }) => {
         <h3 className="ms-3">There are no products in the cart!</h3>
       )}
 
-      { (
-        <div className="row justify-content-center">
-          <div className="col-md-4">
-            <h3>Cart Summary</h3>
-            <hr />
-            <div>Total quantity:{check.length > 0 ? totalQuantity : 0} </div>
-            <div>
-              Total price:
-              {check.length > 0? totalPrice.toLocaleString('vi', {
-                style: 'currency',
-                currency: 'VND',
-              }) : 0}
+      {check.length !== 0 && <Cashout data={check} user = {props.user} className="cashout" />}
+
+      {
+        <div className="row justify-content-center cart-line__wrap">
+          <div className="col-md-4 cart-line__wrap__summary">
+            <div className="cover">
+              <h3 className="ps-4">Cart Summary</h3>
+              <div className="ps-4">
+                Total quantity:{check.length > 0 ? totalQuantity : 0}{' '}
+              </div>
+              <div className="ps-4">
+                Total price:
+                {check.length > 0
+                  ? totalPrice.toLocaleString('vi', {
+                      style: 'currency',
+                      currency: 'VND',
+                    })
+                  : 0}
+              </div>
+              {/* <Link to="/cashout" className="button">Mua hàng</Link> */}
+              <button
+                className="button ms-4"
+                onClick={() =>
+                  dispatch({
+                    type: 'cashout',
+                    payload: { listProduct: check, amount: totalPrice },
+                    userID: props.user.UserID,
+                  })
+                }
+              >
+                Mua hàng
+              </button>
             </div>
           </div>
         </div>
-      )}
+      }
     </div>
   );
 };
