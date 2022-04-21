@@ -26,7 +26,12 @@ a{
     text-decoration: none;
     color: upset;
 }
-
+.active{
+    display: block;
+}
+.non-active{
+    display: none;
+}
 // @each $color, $val in $colors {
 //     .color-#{$color}{
 //         color: $val;

@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+// import { Link } from 'react-router-dom';
 
 import { CartContext } from '../store/CartContext';
 import { BsPlusSquare, BsDashSquare } from 'react-icons/bs';
@@ -135,7 +135,7 @@ const CartLine = (props) => {
               </div>
 
               <div className="col-md-1 cart-line__wrap__img">
-                <img src={itemCart.product.ProductImg} alt="" />
+                <img src={itemCart.product.ProductImg} alt="product" />
               </div>
 
               <div className="col-md-2 cart-line__wrap__name my-auto">

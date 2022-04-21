@@ -1,0 +1,18 @@
+.order{
+    font-family: "Cabin", sans-serif;
+    &__line{
+        font-size: 16px;
+        background-color:rgba($color: #000000, $alpha: 0.1);
+        margin-bottom: 20px;
+        padding: 15px 20px 60px 20px;
+        .amount{
+            background-color: rgba($color: #000000, $alpha: 0.8);
+            color: $txt-white;
+            width: fit-content;
+            block-size: fit-content;
+            float:right;
+            padding: 10px 15px;
+            // text-align: end;
+        }
+    }
+}

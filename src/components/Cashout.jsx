@@ -31,7 +31,7 @@ const Cashout = ({ data, user }) => {
             {data.map((item, index) => (
               <tr key={index}>
                 <td className="img-product">
-                  <img src={item.product.ProductImg} />
+                  <img src={item.product.ProductImg} alt="product" />
                 </td>
                 <td>{item.product.ProductName}</td>
                 <td>
