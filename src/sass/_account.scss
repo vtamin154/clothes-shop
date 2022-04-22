@@ -1,10 +1,14 @@
 .account {
   min-height: 600px;
   .img-user {
+    width: 265px;
+    height: 265px;
+    background-color: #dfdfdf;
     img {
       width: 265px;
       height: 265px;
       margin-bottom: 20px;
+      object-fit: cover;
     }
   }
   .tab {

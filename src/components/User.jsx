@@ -7,7 +7,7 @@ const User = (props) => {
             <li><span>Họ tên: </span>{props.user.Name}</li>
             <li><span>Username: </span>{props.user.UserName}</li>
             <li><span>Email: </span>{props.user.Email}</li>
-            <li><span>ID: </span>{props.user.UserID}</li>
+            {/* <li><span>ID: </span>{props.user.UserID}</li> */}
         </ul>
     </div>
   )

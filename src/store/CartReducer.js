@@ -202,6 +202,7 @@ function cartReducer(state, action) {
         })
         .then((doc) => {
           action.payload.listProduct.forEach((item) => {
+            console.log(item.productID.id);
             db.collection('Orders')
               .doc(doc.id)
               .collection('ListItem')

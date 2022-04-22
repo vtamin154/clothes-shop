@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { db } from '../config/Config';
 
 const Order = (props) => {
@@ -23,6 +24,7 @@ const Order = (props) => {
 
                   if (ProductID) {
                     ProductID.get().then((res) => {
+                      // console.log(res.data());
                       const {
                         ProductName,
                         ProductCategory,
@@ -58,7 +60,7 @@ const Order = (props) => {
   //   console.log(order);
   return (
     <div className={`order ${props.active ? 'active' : 'non-active'}`}>
-      {order.map((item, index) => (
+      { order.length !== 0 ? order.map((item, index) => (
         <div className="order__line" key={index}>
           {item.order.map((i, s) => (
             <ul className="d-flex justify-content-between" key={s}>
@@ -73,7 +75,10 @@ const Order = (props) => {
             })}
           </div>
         </div>
-      ))}
+      )) : (<div>
+        <h1>Bạn chưa có đơn nào !</h1>
+        <Link to = "/catalog" className="btn btn-dark mt-3">Quay lại cửa hàng</Link>
+      </div>)}
     </div>
   );
 };
