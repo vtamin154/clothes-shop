@@ -9,6 +9,10 @@ import { auth, db } from '../config/Config';
 // import Slider from './Slider';
 const Layout = () => {
   const [user, setUser] = useState(null);
+  const [filterSearch, setFilterSearch] = useState('')
+  const handleFilterSearch = (value) =>{
+    setFilterSearch(value)
+  }
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -32,9 +36,9 @@ const Layout = () => {
           <Route
             render={() => (
               <div>
-                <Header user={user} />
+                <Header user={user} onSearch = {handleFilterSearch} />
                 <div className="main">
-                  <Routes user={user} />
+                  <Routes user={user} filterSearch = {filterSearch} />
                   {/* <Slider /> */}
                 </div>
                 <Footer />

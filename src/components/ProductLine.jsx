@@ -32,17 +32,17 @@ const ProductLine = (props) => {
             className="product-line__card col-md-3 col-lg-2"
             key={product.ProductID}
           >
-            <div className="product-line__card__img">
+            <a href='/' className="product-line__card__img">
               <img src={product.ProductImg} alt="" />
               <div className="product-line__card__img__cart">
                 <button onClick={() => addToCart(product)}>Add to cart</button>
               </div>
-            </div>
+            </a>
 
             <div className="product-content">
               <a
                 href="/"
-                className="product__card__name text-dark text-decoration-none"
+                className="product-line__card__name text-dark text-decoration-none"
               >
                 {product.ProductName}
               </a>

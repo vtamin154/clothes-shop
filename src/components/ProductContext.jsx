@@ -6,23 +6,35 @@ const ProductContext = (props) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
+    let data = [];
     db.collection('Products').onSnapshot((snapshot) => {
       let changes = snapshot.docChanges();
       changes.forEach((change) => {
         if (change.type === 'added') {
-          setProducts((pre) => [
-            ...pre,
-            {
+          data.push(
+              {
               ProductID: change.doc.id,
               ProductName: change.doc.data().ProductName,
               ProductCategory: change.doc.data().ProductCategory,
               ProductPrice: change.doc.data().ProductPrice,
               ProductImg: change.doc.data().ProductImg,
             },
-          ]);
+          )
+          // setProducts((pre) => [
+          //   ...pre,
+          //   {
+          //     ProductID: change.doc.id,
+          //     ProductName: change.doc.data().ProductName,
+          //     ProductCategory: change.doc.data().ProductCategory,
+          //     ProductPrice: change.doc.data().ProductPrice,
+          //     ProductImg: change.doc.data().ProductImg,
+          //   },
+          // ]);
         }
       });
     });
+    setProducts(data);
+    // console.log(data);
   }, []);
 
   return (

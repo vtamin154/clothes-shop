@@ -22,7 +22,7 @@
   }
 
   .product-content {
-    margin-top: -20px;
+    margin-top: 10px;
     @include tablet() {
       margin-top: -25px;
     }
@@ -44,6 +44,7 @@
     }
 
     &__img {
+      display: block;
       img {
         display: block;
         width: 100%;
