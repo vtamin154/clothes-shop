@@ -9,7 +9,8 @@ import Cashout from '../components/Cashout';
 const CartLine = (props) => {
   const [state, dispatch] = useContext(CartContext);
   const [check, setCheck] = useState([]);
-  console.log(check);
+  console.log("state",state);
+  console.log("Check", check);
   const handleCheck = (itemCart) => {
     setCheck((prev) => {
       const isCheck = check.includes(itemCart);

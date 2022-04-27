@@ -21,6 +21,7 @@ export function getData(state, uid) {
             snap.forEach((d) => {
               // let item = d.data(); //product id, total
               const { ProductID, Total } = d.data();
+              // console.log("ProductID",ProductID.id);
               if (ProductID) {
                 ProductID.get()
                   .then((res) => {
@@ -99,7 +100,7 @@ function cartReducer(state, action) {
       //   return state;
       // }
       // else {
-
+      // console.log(action.payload.product.ProductID)
       db.collection('Cart')
         .where('UserID', '==', auth.currentUser.uid)
         .get()
@@ -113,25 +114,6 @@ function cartReducer(state, action) {
             });
         });
 
-      //add data twice
-      // db.collection('Cart')
-      //   .where('UserID', '==', auth.currentUser.uid)
-      //   .get()
-      //   .then((snapshot) => {
-      //     snapshot.forEach((doc) => {
-      //       db.collection('Cart')
-      //         .doc(doc.id)
-      //         .collection('ProductList')
-      //         .add({
-      //           ProductID: db.doc(
-      //             'Products/' + action.payload.product.ProductID
-      //           ),
-      //           Total: action.payload.total,
-      //         });
-      //       console.log(doc.id);
-      //     });
-      //   });
-
       return {
         shoppingCart: [
           ...state.shoppingCart,
@@ -140,7 +122,8 @@ function cartReducer(state, action) {
             product: {
               ...action.payload.product,
             },
-            productID: action.payload.productID,
+            // productID: action.payload.productID,
+            productID: db.doc('Products/' + action.payload.productID)
           },
         ],
       };
@@ -195,6 +178,7 @@ function cartReducer(state, action) {
       };
 
     case 'cashout':
+      // action.payload.listProduct.map(item => console.log(item.productID.id))
       db.collection('Orders')
         .add({
           Amount: action.payload.amount,
@@ -237,6 +221,7 @@ function cartReducer(state, action) {
               })
           )
         );
+
       //error
       // action.payload.listProduct.forEach(item => {
       //   newList = state.shoppingCart.filter(i => i.productID !== item.productID)

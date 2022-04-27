@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Cashout = ({ data, user }) => {
-  // console.log(data);
+  // console.log("cashout",data);
   return (
     <div className="cashout container">
       <div className="row address">
