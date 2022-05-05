@@ -26,9 +26,10 @@ export function getData(state, uid) {
                 ProductID.get()
                   .then((res) => {
                     // item.productData = res.data(); //pd infor
+                    // console.log(res.data());
                     const {
-                      ProductName,
                       ProductCategory,
+                      ProductName,
                       ProductPrice,
                       ProductImg,
                     } = res.data();
@@ -109,7 +110,7 @@ function cartReducer(state, action) {
             .doc(snapshot.docs[0].id)
             .collection('ProductList')
             .add({
-              ProductID: db.doc('Products/' + action.payload.product.ProductID),
+              ProductID: db.doc('Products/' + action.payload.productID),
               Total: action.payload.total,
             });
         });
@@ -123,7 +124,7 @@ function cartReducer(state, action) {
               ...action.payload.product,
             },
             // productID: action.payload.productID,
-            productID: db.doc('Products/' + action.payload.productID)
+            productID: db.doc('Products/' + action.payload.productID),
           },
         ],
       };
@@ -186,7 +187,7 @@ function cartReducer(state, action) {
         })
         .then((doc) => {
           action.payload.listProduct.forEach((item) => {
-            console.log(item.productID.id);
+            // console.log(item.productID.id);
             db.collection('Orders')
               .doc(doc.id)
               .collection('ListItem')
@@ -197,6 +198,8 @@ function cartReducer(state, action) {
           });
         });
 
+      //remove products is purchased from cart
+      // console.log('listProduct', action.payload.listProduct);
       db.collection('Cart')
         .where('UserID', '==', action.userID)
         .get()
@@ -210,15 +213,16 @@ function cartReducer(state, action) {
               .where('ProductID', '==', item.productID)
               .get()
               .then((snap) => {
-                snap.forEach((d) =>
-                  db
-                    .collection('Cart')
+                snap.forEach((d) => {
+                  // console.log(item.productID.id);
+                  db.collection('Cart')
                     .doc(snapshot.docs[0].id)
                     .collection('ProductList')
                     .doc(d.id)
-                    .delete()
-                );
+                    .delete();
+                });
               })
+              .catch((error) => console.log(error.message))
           )
         );
 
@@ -227,14 +231,13 @@ function cartReducer(state, action) {
       //   newList = state.shoppingCart.filter(i => i.productID !== item.productID)
       //   console.log(newList)
       // })
-
       let newList = state.shoppingCart.filter((item) => {
         return !action.payload.listProduct.some(
-          (i) => i.productID === item.productID
+          (i) => i.productID.id === item.productID.id
         );
       });
 
-      // console.log(newList);
+      // console.log('newList', newList);
       return {
         shoppingCart: [...newList],
       };

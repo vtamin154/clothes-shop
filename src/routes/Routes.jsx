@@ -11,6 +11,7 @@ import Login from '../components/Login';
 import Contact from '../pages/Contact';
 import Cashout from '../components/Cashout';
 import Account from '../pages/Account';
+import ProductDetail from '../pages/ProductDetail';
 const Routes = (props) => {
   return (
     <Switch>
@@ -24,6 +25,7 @@ const Routes = (props) => {
       <Route path='/contact' exact component={Contact}/>
       <Route path='/cashout' exact component={() =>  <Cashout user = {props.user}/>} />
       <Route path='/account' exact component={() => <Account user = {props.user}/>} />
+      <ProductDetail user={props.user} path = {`/product-detail`}/>
     </Switch>
   );
 }

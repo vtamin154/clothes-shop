@@ -34,12 +34,17 @@
   }
   &__right {
     font-size: 16px;
-    .link{
-        color: rgb(223, 223, 223);
-        text-decoration: none;
-        &:hover{
-          color: $txt-white;
-        }
+    .link {
+      color: rgb(223, 223, 223);
+      text-decoration: none;
+      &:hover {
+        color: $txt-white;
+      }
+    }
+    .avatar {
+      height: 30px;
+      width: 30px;
+      border-radius: 30px;
     }
   }
 }

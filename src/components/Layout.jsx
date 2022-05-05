@@ -6,13 +6,14 @@ import Routes from '../routes/Routes';
 import ProductContext from './ProductContext';
 import CartProvider from '../store/CartContext';
 import { auth, db } from '../config/Config';
+import ProductDetailProvider from '../store/ProductDetailContext';
 // import Slider from './Slider';
 const Layout = () => {
   const [user, setUser] = useState(null);
-  const [filterSearch, setFilterSearch] = useState('')
-  const handleFilterSearch = (value) =>{
-    setFilterSearch(value)
-  }
+  const [filterSearch, setFilterSearch] = useState('');
+  const handleFilterSearch = (value) => {
+    setFilterSearch(value);
+  };
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -32,20 +33,22 @@ const Layout = () => {
   return (
     <ProductContext>
       <CartProvider>
-        <BrowserRouter>
-          <Route
-            render={() => (
-              <div>
-                <Header user={user} onSearch = {handleFilterSearch} />
-                <div className="main">
-                  <Routes user={user} filterSearch = {filterSearch} />
-                  {/* <Slider /> */}
+        <ProductDetailProvider>
+          <BrowserRouter>
+            <Route
+              render={() => (
+                <div>
+                  <Header user={user} onSearch={handleFilterSearch} />
+                  <div className="main">
+                    <Routes user={user} filterSearch={filterSearch} />
+                    {/* <Slider /> */}
+                  </div>
+                  <Footer />
                 </div>
-                <Footer />
-              </div>
-            )}
-          />
-        </BrowserRouter>
+              )}
+            />
+          </BrowserRouter>
+        </ProductDetailProvider>
       </CartProvider>
     </ProductContext>
   );

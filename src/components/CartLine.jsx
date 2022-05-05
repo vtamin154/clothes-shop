@@ -1,23 +1,117 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 // import { Link } from 'react-router-dom';
 
 import { CartContext } from '../store/CartContext';
 import { BsPlusSquare, BsDashSquare } from 'react-icons/bs';
 import { FaTrashAlt } from 'react-icons/fa';
 import Cashout from '../components/Cashout';
+import { ProductDetailContext } from '../store/ProductDetailContext';
+import { db } from '../config/Config';
 
 const CartLine = (props) => {
   const [state, dispatch] = useContext(CartContext);
-  const [check, setCheck] = useState([]);
-  console.log("state",state);
-  console.log("Check", check);
+  const [productPurchased, setProductPurchased] =
+    useContext(ProductDetailContext);
+  const [check, setCheck] = useState(
+    // () =>
+    // productPurchased.product !== ''
+    //   ? [
+    //       {
+    //         total: productPurchased.total,
+    //         product: {
+    //           ProductName: productPurchased.product.ProductName,
+    //           ProductImg: productPurchased.product.ProductImg,
+    //           ProductPrice: productPurchased.product.ProductPrice,
+    //           ProductCategory: productPurchased.product.ProductCategory,
+    //         },
+    //         productID: db.doc('Products/' + productPurchased.product.ProductID),
+    //       },
+    //     ]
+    //   : 
+      []
+  );
+
+  useEffect(() => {
+    if (productPurchased.product !== '') {
+          let product = {
+            ProductName: productPurchased.product.ProductName,
+            ProductImg: productPurchased.product.ProductImg,
+            ProductPrice: productPurchased.product.ProductPrice,
+            ProductCategory: productPurchased.product.ProductCategory,
+          };
+
+      setCheck(pre => [
+        ...pre,
+        {
+          product: product,
+          total: productPurchased.total,
+          productID: db.doc('Products/' + productPurchased.product.ProductID)
+        }
+      ])
+
+      // let id = db.doc('Products/' + productPurchased.product.ProductID);
+      // db.collection('Cart')
+      //   .where('UserID', '==', props.user.UserID)
+      //   .get()
+      //   .then((snapshot) => {
+      //     db.collection('Cart')
+      //       .doc(snapshot.docs[0].id)
+      //       .collection('ProductList')
+      //       .where('ProductID', '==', id)
+      //       .get()
+      //       .then((snap) =>
+      //         snap.forEach((d) => {
+      //           const { ProductID, Total } = d.data();
+      //           if (ProductID) {
+      //             ProductID.get().then((res) => {
+      //               const {
+      //                 ProductCategory,
+      //                 ProductName,
+      //                 ProductImg,
+      //                 ProductPrice,
+      //               } = res.data();
+      //               setCheck((pre) => [
+      //                 ...pre,
+      //                 {
+      //                   total: Total,
+      //                   product: {
+      //                     ProductCategory: ProductCategory,
+      //                     ProductName: ProductName,
+      //                     ProductImg: ProductImg,
+      //                     ProductPrice: ProductPrice,
+      //                   },
+      //                   productID: ProductID,
+      //                 },
+      //               ]);
+      //             });
+      //           }
+      //         })
+      //       );
+      //   });
+    }
+  }, []);
+
+  // console.log('state', state);
+  // console.log('productPurchased', productPurchased);
+  // console.log('Check', check);
+
+  const isCheck = (itemCart) => {
+    let id = itemCart.productID.id;
+    let ans = check.findIndex((item) => item.productID.id === id);
+    // console.log(ans);
+    return ans !== -1 ? true : false;
+  };
+
   const handleCheck = (itemCart) => {
     setCheck((prev) => {
-      const isCheck = check.includes(itemCart);
-      if (!isCheck) {
+      const isChecked = isCheck(itemCart);
+      // const isCheck = check.includes(itemCart);
+      if (!isChecked) {
         return [...prev, itemCart];
       } else {
-        return check.filter((item) => item !== itemCart);
+        return check.filter(
+          (item) => item.productID.id !== itemCart.productID.id
+        );
       }
     });
   };
@@ -129,7 +223,8 @@ const CartLine = (props) => {
                 <input
                   className="form-check-input"
                   type="checkbox"
-                  checked={check.includes(itemCart)}
+                  // checked={check.includes(itemCart)}
+                  checked={isCheck(itemCart)}
                   value={itemCart.product}
                   onChange={() => handleCheck(itemCart)}
                 ></input>
@@ -215,7 +310,9 @@ const CartLine = (props) => {
         <h3 className="ms-3">There are no products in the cart!</h3>
       )}
 
-      {check.length !== 0 && <Cashout data={check} user = {props.user} className="cashout" />}
+      {check.length !== 0 && (
+        <Cashout data={check} user={props.user} className="cashout" />
+      )}
 
       {
         <div className="row justify-content-center cart-line__wrap">
@@ -223,7 +320,7 @@ const CartLine = (props) => {
             <div className="cover">
               <h3 className="ps-4">Cart Summary</h3>
               <div className="ps-4">
-                Total quantity:{check.length > 0 ? totalQuantity : 0}{' '}
+                Total quantity:{check.length > 0 ? totalQuantity : 0}
               </div>
               <div className="ps-4">
                 Total price:
@@ -237,13 +334,15 @@ const CartLine = (props) => {
               {/* <Link to="/cashout" className="button">Mua hàng</Link> */}
               <button
                 className="button ms-4"
-                onClick={() =>
+                onClick={() => {
                   dispatch({
                     type: 'cashout',
                     payload: { listProduct: check, amount: totalPrice },
                     userID: props.user.UserID,
-                  })
-                }
+                  });
+                  setCheck([]);
+                  setProductPurchased({ product: '', total: 0 });
+                }}
               >
                 Mua hàng
               </button>

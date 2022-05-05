@@ -22,11 +22,16 @@ const Header = (props) => {
     // },369)
   };
 
+  const history = useHistory();
   const handleSearch = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       if (!props.onSearch) return;
       else {
+        let path = window.location.pathname;
+        if(path !== '/catalog'){
+          history.push('/catalog');
+        }
         props.onSearch(searchTerm);
         // setSearchTerm('');
       }
@@ -49,8 +54,6 @@ const Header = (props) => {
   //     window.removeEventListener('scroll', handleScroll);
   //   };
   // }, []);
-
-  const history = useHistory();
 
   const logout = () => {
     auth.signOut().then(() => {
@@ -98,8 +101,8 @@ const Header = (props) => {
                 <Link to="/contact" className="px-3 link">Liên hệ</Link>
                 {props.user ? (
                   <Link className="px-3 link" to="/account">
-                    {/* <img src="" alt="" /> */}
-                    <AiOutlineUser />
+                    <img className="avatar me-2" src={props.user.UserImg} alt="" />
+                    {/* <AiOutlineUser /> */}
                     <span>{props.user.UserName}</span>
                   </Link>
                 ) : (

@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer, useState } from 'react';
+import { createContext, useEffect, useReducer } from 'react';
 import cartReducer,  { initState , getData} from './CartReducer';
 import { auth, db } from '../config/Config';
 export const CartContext = createContext();
@@ -12,7 +12,7 @@ const CartProvider = ({ children }) => {
         db.collection('UserAccount')
           .doc(user.uid)
           .get()
-          .then((snapShot) => {
+          .then(() => {
             // setUser({
             //   UserID: user.uid,
             //   ...snapShot.data()

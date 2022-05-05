@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect} from 'react';
 import CartLine from '../components/CartLine';
+import Helmet from '../components/Helmet';
 import { useHistory } from 'react-router-dom';
-import { db } from '../config/Config';
 const Cart = ({ user }) => {
   const history = useHistory();
 
@@ -74,13 +74,13 @@ const Cart = ({ user }) => {
   }, []);
 
   return (
-    <div>
+    <Helmet title = "Giỏ hàng">
       <CartLine
         user={user}
         // data={products}
         // handleChangeTotal={handleChangeTotal}
       />
-    </div>
+    </Helmet>
   );
 };
 
