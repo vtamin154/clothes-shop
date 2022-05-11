@@ -14,7 +14,7 @@ const ProductLine = (props) => {
   const history = useHistory();
   const addToCart = (product) => {
     if(props.user){
-      dispatch({type:"add_product" , user: props.user.UserID, payload:{total: 1, product: product, productID: product.ProductID} })
+      dispatch({type:"add_product" , userID: props.user.UserID, payload:{total: 1, product: product, productID: product.ProductID} })
       // console.log(product.ProductID);
     }
     else{

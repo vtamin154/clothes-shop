@@ -1,8 +1,8 @@
-import React, { useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import CartLine from '../components/CartLine';
 import Helmet from '../components/Helmet';
 import { useHistory } from 'react-router-dom';
-const Cart = ({ user }) => {
+const Cart = ({ user, loading }) => {
   const history = useHistory();
 
   // const [products, setProducts] = useState([]);
@@ -33,9 +33,10 @@ const Cart = ({ user }) => {
   // };
 
   useEffect(() => {
-    if (!user) {
+    if (!user && !loading) {
       history.push('/login');
     }
+
     // const getData = () => {
     //   db.collection('Cart')
     //     .where('UserID', '==', user.UserID)
@@ -74,13 +75,22 @@ const Cart = ({ user }) => {
   }, []);
 
   return (
-    <Helmet title = "Giỏ hàng">
-      <CartLine
-        user={user}
-        // data={products}
-        // handleChangeTotal={handleChangeTotal}
-      />
-    </Helmet>
+    <>
+      {loading && (
+        <div class="spinner-border text-dark loading" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      )}
+      {!loading && (
+        <Helmet title="Giỏ hàng">
+          <CartLine
+            user={user}
+            // data={products}
+            // handleChangeTotal={handleChangeTotal}
+          />
+        </Helmet>
+      )}
+    </>
   );
 };
 

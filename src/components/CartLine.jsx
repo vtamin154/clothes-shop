@@ -27,27 +27,27 @@ const CartLine = (props) => {
     //         productID: db.doc('Products/' + productPurchased.product.ProductID),
     //       },
     //     ]
-    //   : 
-      []
+    //   :
+    []
   );
-
+  
   useEffect(() => {
     if (productPurchased.product !== '') {
-          let product = {
-            ProductName: productPurchased.product.ProductName,
-            ProductImg: productPurchased.product.ProductImg,
-            ProductPrice: productPurchased.product.ProductPrice,
-            ProductCategory: productPurchased.product.ProductCategory,
-          };
+      let product = {
+        ProductName: productPurchased.product.ProductName,
+        ProductImg: productPurchased.product.ProductImg,
+        ProductPrice: productPurchased.product.ProductPrice,
+        ProductCategory: productPurchased.product.ProductCategory,
+      };
 
-      setCheck(pre => [
+      setCheck((pre) => [
         ...pre,
         {
           product: product,
           total: productPurchased.total,
-          productID: db.doc('Products/' + productPurchased.product.ProductID)
-        }
-      ])
+          productID: db.doc('Products/' + productPurchased.product.ProductID),
+        },
+      ]);
 
       // let id = db.doc('Products/' + productPurchased.product.ProductID);
       // db.collection('Cart')
@@ -325,7 +325,7 @@ const CartLine = (props) => {
               <div className="ps-4">
                 Total price:
                 {check.length > 0
-                  ? totalPrice.toLocaleString('vi', {
+                  ? totalPrice.toLocaleString('it-IT', {
                       style: 'currency',
                       currency: 'VND',
                     })

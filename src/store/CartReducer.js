@@ -103,7 +103,7 @@ function cartReducer(state, action) {
       // else {
       // console.log(action.payload.product.ProductID)
       db.collection('Cart')
-        .where('UserID', '==', auth.currentUser.uid)
+        .where('UserID', '==', action.userID)
         .get()
         .then((snapshot) => {
           db.collection('Cart')

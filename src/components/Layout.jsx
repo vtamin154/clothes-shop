@@ -14,6 +14,8 @@ const Layout = () => {
   const handleFilterSearch = (value) => {
     setFilterSearch(value);
   };
+
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -25,6 +27,7 @@ const Layout = () => {
               UserID: user.uid,
               ...snapShot.data(),
             });
+            setLoading(false);
             // console.log(user);
           });
       }
@@ -40,7 +43,7 @@ const Layout = () => {
                 <div>
                   <Header user={user} onSearch={handleFilterSearch} />
                   <div className="main">
-                    <Routes user={user} filterSearch={filterSearch} />
+                    <Routes user={user} loading = {loading} filterSearch={filterSearch} />
                     {/* <Slider /> */}
                   </div>
                   <Footer />

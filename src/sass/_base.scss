@@ -32,6 +32,11 @@ a{
 .non-active{
     display: none;
 }
+.loading{
+    margin-left: 50%;
+    margin-top: 300px;
+    margin-bottom: 300px;
+}
 // @each $color, $val in $colors {
 //     .color-#{$color}{
 //         color: $val;
