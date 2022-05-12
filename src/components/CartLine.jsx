@@ -7,6 +7,7 @@ import { FaTrashAlt } from 'react-icons/fa';
 import Cashout from '../components/Cashout';
 import { ProductDetailContext } from '../store/ProductDetailContext';
 import { db } from '../config/Config';
+import Message from './Message';
 
 const CartLine = (props) => {
   const [state, dispatch] = useContext(CartContext);
@@ -30,7 +31,8 @@ const CartLine = (props) => {
     //   :
     []
   );
-  
+  const [success, setSuccess] = useState(false);
+
   useEffect(() => {
     if (productPurchased.product !== '') {
       let product = {
@@ -90,6 +92,15 @@ const CartLine = (props) => {
       //   });
     }
   }, []);
+
+  useEffect(() => {
+    const setTime = setTimeout(() => {
+      setSuccess(false);
+    }, 1000);
+    return () => {
+      clearTimeout(setTime);
+    };
+  }, [success]);
 
   // console.log('state', state);
   // console.log('productPurchased', productPurchased);
@@ -342,6 +353,7 @@ const CartLine = (props) => {
                   });
                   setCheck([]);
                   setProductPurchased({ product: '', total: 0 });
+                  setSuccess(true);
                 }}
               >
                 Mua hàng
@@ -350,6 +362,10 @@ const CartLine = (props) => {
           </div>
         </div>
       }
+
+      <div className={success ? 'active' : 'non-active'}>
+        <Message />
+      </div>
     </div>
   );
 };

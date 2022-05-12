@@ -76,7 +76,7 @@ const SliderItem = (props) => (
         <span>{props.item.detail}</span>
       </div>
       <div className="slider__item__infor__btn">
-        <Link to={props.item.path}>
+        <Link to="/catalog">
           <button>Mua ngay</button>
         </Link>
       </div>

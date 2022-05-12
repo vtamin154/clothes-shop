@@ -1,47 +1,67 @@
-import React, { useContext } from 'react';
-import {useHistory, Link} from 'react-router-dom';
+import React, { useContext, useState, useEffect } from 'react';
+import { useHistory, Link } from 'react-router-dom';
 import { ProductContextProvider } from './ProductContext';
 import { CartContext } from '../store/CartContext';
+import Message from './Message';
 // import { ProductDetailContext } from '../store/ProductDetailContext';
 
 const ProductLine = (props) => {
   const { products } = useContext(ProductContextProvider);
+  const [success, setSuccess] = useState(false);
   // const [product, setProduct] = useContext(ProductDetailContext);
   const data = props.data;
   // console.log("data", data);
   const listProduct = data ? data : products.slice(0, 10);
 
+  useEffect(() => {
+    const setTime = setTimeout(() => {
+      setSuccess(false);
+    }, 1000);
+    return () => {
+      clearTimeout(setTime);
+    };
+  },[success])
+
   const history = useHistory();
   const addToCart = (product) => {
-    if(props.user){
-      dispatch({type:"add_product" , userID: props.user.UserID, payload:{total: 1, product: product, productID: product.ProductID} })
+    if (props.user) {
+      dispatch({
+        type: 'add_product',
+        userID: props.user.UserID,
+        payload: { total: 1, product: product, productID: product.ProductID },
+      });
+      setSuccess(true);
       // console.log(product.ProductID);
-    }
-    else{
+    } else {
       // auth.onAuthStateChanged(user => {
       //   if(!user){
-          history.push('/login');
+      history.push('/login');
       //   }
       // })
     }
-  }
+  };
 
-  const goToProductDetail = (id) =>{
+  const goToProductDetail = (id) => {
     // setProduct(product);// ProductID, ProductImg[], ProductName, ProductCategory, ProductPrice
     history.push(`/product-detail/${id}`);
-  }
-  
-  const [,dispatch] = useContext(CartContext);
+  };
+
+  const [, dispatch] = useContext(CartContext);
   return (
     <div className="product-line container">
       <div className="row">
-        {listProduct.map((product) => (
+        {listProduct.map((product, index) => (
           <div
             className="product-line__card col-md-3 col-lg-2"
-            key={product.ProductID}
+            // key={product.ProductID}
+            key={index}
           >
             <div className="product-line__card__img">
-              <img onClick={() => goToProductDetail(product.ProductID)} src={product.ProductImg[0]} alt="" />
+              <img
+                onClick={() => goToProductDetail(product.ProductID)}
+                src={product.ProductImg[0]}
+                alt={product.ProductName}
+              />
               <div className="product-line__card__img__cart">
                 <button onClick={() => addToCart(product)}>Add to cart</button>
               </div>
@@ -66,6 +86,9 @@ const ProductLine = (props) => {
             </div>
           </div>
         ))}
+      </div>
+      <div className={success ? 'active' : 'non-active'}>
+        <Message />
       </div>
     </div>
   );

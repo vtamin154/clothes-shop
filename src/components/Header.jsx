@@ -1,7 +1,7 @@
 import React, {useRef, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import logo from '../assets/clothes-img/logo.png';
-import { AiOutlineShoppingCart, AiOutlineUser } from 'react-icons/ai';
+import { AiOutlineShoppingCart} from 'react-icons/ai';
 
 import { Navbar, Container, Nav, Form, FormControl } from 'react-bootstrap';
 import { auth } from '../config/Config';
