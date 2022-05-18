@@ -72,21 +72,26 @@ const handleChangeTotal = (state, action) => {
           .where('ProductID', '==', action.payload.productID)
           .get()
           .then((snap) => {
-            snap.forEach((d) => {
-              db.collection('Cart')
-                .doc(doc.id)
-                .collection('ProductList')
-                .doc(d.id)
-                .update({ Total: action.payload.total });
-            });
-            let index = state.shoppingCart.findIndex(
-              (item) => item.productID === action.payload.productID
-            );
-            state.shoppingCart[index].total = action.payload.total;
+            // snap.forEach((d) => {
+            //   db.collection('Cart')
+            //     .doc(doc.id)
+            //     .collection('ProductList')
+            //     .doc(d.id)
+            //     .update({ Total: action.payload.total });
+            // });
+            db.collection('Cart')
+              .doc(doc.id)
+              .collection('ProductList')
+              .doc(snap.docs[0].id)
+              .update({ Total: action.payload.total });
           });
       });
     })
     .catch((error) => console.log(error.message));
+  let index = state.shoppingCart.findIndex(
+    (item) => item.productID === action.payload.productID
+  );
+  state.shoppingCart[index].total = action.payload.total;
   return state.shoppingCart;
 };
 

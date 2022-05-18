@@ -77,8 +77,8 @@ const Cart = ({ user, loading }) => {
   return (
     <>
       {loading && (
-        <div class="spinner-border text-dark loading" role="status">
-          <span class="sr-only">Loading...</span>
+        <div className="spinner-border text-dark loading" role="status">
+          <span className="sr-only">Loading...</span>
         </div>
       )}
       {!loading && (

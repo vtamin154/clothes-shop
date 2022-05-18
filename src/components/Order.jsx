@@ -131,12 +131,19 @@ const Order = (props) => {
       )}
       {!props.loading && (
         <div className={`order ${props.active ? 'active' : 'non-active'}`}>
+          <ul className='row'>
+                  <li className="col-md-2 text-center">Sản phẩm</li>
+                  <li className="col-md-3 text-center"></li>
+                  <li className="col-md-3 text-center">Danh mục</li>
+                  <li className="col-md-1 text-center">Đơn giá</li>
+                  <li className="col-md-3 text-center">Số lượng</li>
+                </ul>
           {order.length !== 0 ? (
             order.map((item, index) => (
               <div className="order__line" key={index}>
                 {item.order.map((i, s) => (
                   <ul className="row" key={s}>
-                    <li className="img-product col-md-3 my-auto text-center">
+                    <li className="img-product col-md-2 my-auto text-center">
                       <img src={i.product.ProductImg} alt="" />
                     </li>
                     <li className="col-md-3 my-auto text-center">
@@ -145,13 +152,18 @@ const Order = (props) => {
                     <li className="col-md-3 my-auto text-center">
                       {i.product.ProductCategory}
                     </li>
+                    <li className="col-md-1 my-auto text-center">
+                      {i.product.ProductPrice.toLocaleString('VI', {
+                        style:'currency',
+                        currency:'VND',
+                      })}
+                    </li>
                     <li className="col-md-3 my-auto text-center">
                       <span>Số lượng: </span>
                       {i.total}
                     </li>
                   </ul>
                 ))}
-                {item.order.length}
                 <div className="text-end amount mx-4">
                   <span>Tổng số tiền:</span>
                   {item.amount.toLocaleString('vi', {
