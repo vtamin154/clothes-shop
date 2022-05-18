@@ -46,5 +46,27 @@
       width: 30px;
       border-radius: 30px;
     }
+    .my-account {
+      &:active {
+        border: none;
+        background-color: transparent;
+      }
+      .toggle {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        font-size: 16px;
+        color: #dfdfdf;
+      }
+      .drop-menu {
+        background-color: rgba($color: #000000, $alpha: 0.3);
+      }
+      .dropdown-item {
+        color: #f1f1f1;
+        &:hover{
+          color: #000000;
+        }
+      }
+    }
   }
 }

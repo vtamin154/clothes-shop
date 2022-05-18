@@ -32,7 +32,6 @@ const CartLine = (props) => {
     []
   );
   const [success, setSuccess] = useState(false);
-
   useEffect(() => {
     if (productPurchased.product !== '') {
       let product = {

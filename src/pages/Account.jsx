@@ -64,8 +64,8 @@ const Account = (props) => {
   return (
     <>
       {props.loading && (
-        <div class="spinner-border text-dark loading" role="status">
-          <span class="sr-only">Loading...</span>
+        <div className="spinner-border text-dark loading" role="status">
+          <span className="sr-only">Loading...</span>
         </div>
       )}
       {!props.loading && (
@@ -115,7 +115,7 @@ const Account = (props) => {
                   </li>
                 </ul>
               </div>
-              <div className="col-md-7">
+              <div className="col-md-9">
                 <User
                   user={props.user}
                   active={active === 'personal-infor' ? true : false}

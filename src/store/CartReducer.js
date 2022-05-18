@@ -85,7 +85,8 @@ const handleChangeTotal = (state, action) => {
             state.shoppingCart[index].total = action.payload.total;
           });
       });
-    });
+    })
+    .catch((error) => console.log(error.message));
   return state.shoppingCart;
 };
 

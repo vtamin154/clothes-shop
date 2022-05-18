@@ -1,9 +1,16 @@
-import React, {useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import logo from '../assets/clothes-img/logo.png';
-import { AiOutlineShoppingCart} from 'react-icons/ai';
+import { AiOutlineShoppingCart } from 'react-icons/ai';
 
-import { Navbar, Container, Nav, Form, FormControl } from 'react-bootstrap';
+import {
+  Navbar,
+  Container,
+  Nav,
+  Form,
+  FormControl,
+  Dropdown,
+} from 'react-bootstrap';
 import { auth } from '../config/Config';
 
 const Header = (props) => {
@@ -29,7 +36,7 @@ const Header = (props) => {
       if (!props.onSearch) return;
       else {
         let path = window.location.pathname;
-        if(path !== '/catalog'){
+        if (path !== '/catalog') {
           history.push('/catalog');
         }
         props.onSearch(searchTerm);
@@ -93,30 +100,46 @@ const Header = (props) => {
             <Navbar.Toggle />
             <Navbar.Collapse className="header__right justify-content-end">
               <Nav className="header__right__link mx-3 my-auto">
+                <Link to="/" className="px-3 link">
+                  Trang chủ
+                </Link>
 
-                <Link to="/" className="px-3 link">Trang chủ</Link>
+                <Link to="/catalog" className="px-3 link">
+                  Cửa hàng
+                </Link>
 
-                <Link to="/catalog" className="px-3 link">Cửa hàng</Link>
-
-                <Link to="/contact" className="px-3 link">Liên hệ</Link>
+                <Link to="/contact" className="px-3 link">
+                  Liên hệ
+                </Link>
                 {props.user ? (
-                  <Link className="px-3 link" to="/account">
-                    <img className="avatar me-2" src={props.user.UserImg} alt="" />
-                    {/* <AiOutlineUser /> */}
-                    <span>{props.user.UserName}</span>
-                  </Link>
+                  <Dropdown className="my-account px-3">
+                    <Dropdown.Toggle 
+                     className='toggle form-control'>
+                      <img
+                        className="avatar me-2"
+                        src={props.user.UserImg}
+                        alt=""
+                      />
+                      <span>{props.user.UserName}</span>
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu className='drop-menu'>
+                      <Dropdown.Item as={Link} to="/account">
+                        My account
+                      </Dropdown.Item>
+                      <Dropdown.Item as={Link} to="/order">
+                        My order
+                      </Dropdown.Item>
+                      <hr className='text-white'/>
+                      <Dropdown.Item href="/login" onClick={logout}>
+                        Logout
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
                 ) : (
                   <Link to="/login" className="px-3 link">
                     Login
                   </Link>
-                )}
-
-                {props.user ? (
-                  <Link to="/login" className="px-3 link" onClick={logout}>
-                    Logout
-                  </Link>
-                ) : (
-                  ''
                 )}
 
                 <Link to="/cart" className="link">
