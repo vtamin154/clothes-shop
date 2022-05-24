@@ -1,5 +1,5 @@
 import React from 'react';
-import Aos from 'aos';
+// import Aos from 'aos';
 import { IoEarthOutline } from 'react-icons/io5';
 import { FaMedal } from 'react-icons/fa';
 import { GiReceiveMoney } from 'react-icons/gi';

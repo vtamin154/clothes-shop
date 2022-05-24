@@ -5,9 +5,12 @@ import React, {
   useEffect,
 } from 'react';
 import {AiOutlineFilter} from 'react-icons/ai'
+import FilterByPrice from './FilterByPrice';
 
 const Sidebar = (props) => {
   const [filterCategory, setFilterCategory] = useState([]);
+
+  const [filterByPrice, setFilterByPrice] = useState([100, 500]);
   const inputRef = useRef();
   // const { products } = useContext(ProductContextProvider);
   const products = props.data;
@@ -38,14 +41,25 @@ const Sidebar = (props) => {
         filterCategory.includes(item.ProductCategory)
       );
     }
+    if(filterByPrice[0] > 100 || filterByPrice[1] < 500){
+      listProduct = listProduct.filter(item => (item.ProductPrice < filterByPrice[1]*1000 && item.ProductPrice > filterByPrice[0]*1000))
+    }
     props.receiveProducts(listProduct);
     // console.log(listProduct);
-  }, [filterCategory]);
+  }, [filterCategory, filterByPrice]);
 
   useEffect(() => {
     filterProducts();
-  }, [filterCategory]);
+  }, [filterCategory, filterByPrice]);
 
+  // console.log(filterByPrice[1]);
+
+  const minDistance = 50;
+  const handleFilterByPrice = (event, value) =>{
+    // let value = e.target.value;
+    // console.log(value);
+    setFilterByPrice([Math.min(filterByPrice[1] - minDistance, value[0]), value[1]]);
+  } 
   return (
     <div className="sidebar">
       {/* <div className="sidebar__search">
@@ -79,6 +93,9 @@ const Sidebar = (props) => {
             </label>
           </div>
         ))}
+
+        <span className="fs-5 mt-4">Theo giá sản phẩm</span>
+        <FilterByPrice value={filterByPrice} changePrice = {handleFilterByPrice} />
       </div>
     </div>
   );

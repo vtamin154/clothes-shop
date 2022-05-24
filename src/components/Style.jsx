@@ -1,5 +1,5 @@
 import React from 'react';
-import Aos from 'aos';
+// import Aos from 'aos';
 
 const Style = () => {
   return (
