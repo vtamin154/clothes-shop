@@ -40,6 +40,23 @@
       &:hover {
         color: $txt-white;
       }
+      position: relative;
+      .quantity {
+        position: absolute;
+        top: -5px;
+        left: 20px;
+        display: inline-block;
+
+        background-color: rgb(253, 207, 55);
+        color: #000000;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+
+        text-align: center;
+        border-radius: 50%;
+        font-weight: 500;
+      }
     }
     .avatar {
       height: 30px;
@@ -63,11 +80,10 @@
       }
       .dropdown-item {
         color: #f1f1f1;
-        &:hover{
+        &:hover {
           color: #000000;
         }
       }
-      
     }
   }
 }

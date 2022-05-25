@@ -13,11 +13,6 @@ const CartProvider = ({ children }) => {
           .doc(user.uid)
           .get()
           .then(() => {
-            // setUser({
-            //   UserID: user.uid,
-            //   ...snapShot.data()
-            // });
-            // console.log(user);
             getData(state, user.uid);
           });
       }

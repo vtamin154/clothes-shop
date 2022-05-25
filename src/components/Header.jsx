@@ -1,8 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import logo from '../assets/clothes-img/logo.png';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
-
+import { CartContext } from '../store/CartContext';
 import {
   Navbar,
   Container,
@@ -12,6 +12,7 @@ import {
   Dropdown,
 } from 'react-bootstrap';
 import { auth } from '../config/Config';
+import { useEffect } from 'react';
 
 const Header = (props) => {
   // const navBarRef = useRef(null);
@@ -29,6 +30,18 @@ const Header = (props) => {
     // },369)
   };
 
+  const [state, ] = useContext(CartContext); 
+  console.log(state.shoppingCart.length)
+
+  // useEffect (() => {
+  //   dispatch({
+  //     type:'view_cart',
+  //     payload: {
+  //       userID: props.user.UserID
+  //     }
+  //   })
+  // },[])
+  // console.log(props.user);
   const history = useHistory();
   const handleSearch = (e) => {
     if (e.key === 'Enter') {
@@ -144,6 +157,8 @@ const Header = (props) => {
 
                 <Link to="/cart" className="link">
                   <AiOutlineShoppingCart className="fs-1" />
+                  <span className='quantity'>{state.shoppingCart.length}</span>
+                  
                 </Link>
               </Nav>
             </Navbar.Collapse>
