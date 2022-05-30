@@ -1,16 +1,25 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState , useEffect} from 'react';
+import Message from '../Message';
 
 import { storage, db } from '../../config/Config';
 
-const AddProducts = () => {
+const AddProducts = (props) => {
   const [productName, setProductName] = useState('');
   const [productCategory, setProductCategory] = useState('');
   const [productPrice, setProductPrice] = useState(0);
   const [productImg, setProductImg] = useState(null);
   const [error, setError] = useState('');
-
+  const [success, setSuccess] = useState(false);
   const types = ['image/png', 'image/jpeg', 'image/jpg'];
+
+  useEffect(() => {
+    const setTime = setTimeout(() => {
+      setSuccess(false);
+    },1000);
+    return () => {
+      clearTimeout(setTime);
+    }
+  }, [success])
   //img product handle
   const productImgHandle = (e) => {
     let selectFile = e.target.files[0];
@@ -23,10 +32,13 @@ const AddProducts = () => {
     }
   };
 
+  const handleCancel = () => {
+    props.toggleModal('');
+  };
+
   //add product event
   const addProduct = (e) => {
     e.preventDefault();
-      // console.log(productName, productCategory,productPrice, productImg );
 
     //storing img
     const uploadTask = storage
@@ -48,12 +60,14 @@ const AddProducts = () => {
           .child(productImg.name)
           .getDownloadURL()
           .then((url) => {
+            let imgArray = [];
+            imgArray.push(url);
             db.collection('Products')
               .add({
                 ProductName: productName,
                 ProductCategory: productCategory,
                 ProductPrice: Number(productPrice),
-                ProductImg: url,
+                ProductImg: imgArray,
               })
               .then(() => {
                 setProductName('');
@@ -67,12 +81,15 @@ const AddProducts = () => {
           });
       }
     );
+
+    handleCancel();
+    // setSuccess(true);
   };
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-sm-10 col-lg-6 mx-auto">
+    <div className="form-product container-fluid">
+      <div className="row form-product__cover">
+        <div className="col-sm-10 col-lg-6 mx-auto px-4 form-product__cover__content">
           <h2>Add Product</h2>
           <form
             action=""
@@ -90,7 +107,11 @@ const AddProducts = () => {
               value={productName}
             />
             <br />
-            <select className="form-select" aria-label="Default select example" onChange={(e) => setProductCategory(e.target.value)}>
+            <select
+              className="form-select"
+              aria-label="Default select example"
+              onChange={(e) => setProductCategory(e.target.value)}
+            >
               <option defaultValue>Thể loại</option>
               <option value="Váy">Váy</option>
               <option value="Áo khoác">Áo khoác</option>
@@ -118,10 +139,24 @@ const AddProducts = () => {
               onChange={productImgHandle}
             />
             <br />
-            <button className="btn btn-success btn-md">Add</button>
+            <hr />
+            <div className="d-flex justify-content-end">
+              <button
+                className="btn btn-secondary btn-md me-4"
+                onClick={() => handleCancel()}
+              >
+                Cancel
+              </button>
+              <button type="submit" className="btn btn-success btn-md" onClick={() => setSuccess(true)}>
+                Add
+              </button>
+            </div>
           </form>
           {error && <span>{error}</span>}
         </div>
+      </div>
+      <div className={success ? 'active' : 'non-active'}>
+        <Message />
       </div>
     </div>
   );

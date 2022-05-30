@@ -12,7 +12,6 @@ import {
   Dropdown,
 } from 'react-bootstrap';
 import { auth } from '../config/Config';
-import { useEffect } from 'react';
 
 const Header = (props) => {
   // const navBarRef = useRef(null);
@@ -31,7 +30,7 @@ const Header = (props) => {
   };
 
   const [state, ] = useContext(CartContext); 
-  console.log(state.shoppingCart.length)
+  // console.log(state.shoppingCart.length)
 
   // useEffect (() => {
   //   dispatch({

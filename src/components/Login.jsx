@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { auth, db } from '../config/Config';
+import { auth } from '../config/Config';
 const Login = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
