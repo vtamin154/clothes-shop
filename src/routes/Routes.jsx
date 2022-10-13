@@ -3,9 +3,8 @@ import { Route, Switch } from 'react-router-dom';
 import Home from '../pages/Home';
 import Catalog from '../pages/Catalog';
 import Cart from '../pages/Cart';
-// import Product from '../pages/Product';
 import AddProducts from '../components/admin/AddProducts';
-// import CartLine from '../components/CartLine';
+
 import SignUp from '../components/SignUp';
 import Login from '../components/Login';
 import Contact from '../pages/Contact';
