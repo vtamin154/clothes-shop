@@ -1,7 +1,10 @@
-import { db } from '../config/Config';
+import { auth, db } from '../config/Config';
 
 const initState = {
   shoppingCart: [],
+  // listTotal:[]
+  // totalPrice: 0,
+  // totalQuantity: 0,
 };
 
 export function getData(state, uid) {
@@ -94,9 +97,6 @@ const handleChangeTotal = (state, action) => {
 
 function cartReducer(state, action) {
   switch (action.type) {
-    // case 'view_cart':
-    //   getData(state, action.payload.userID);
-    //   break;
     case 'add_product':
       // const check = state.shoppingCart.find(
       //   (product) =>

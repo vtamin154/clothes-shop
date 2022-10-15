@@ -1,8 +1,8 @@
-import React, { useRef, useState, useContext } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import logo from '../assets/clothes-img/logo.png';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
-import { CartContext } from '../store/CartContext';
+
 import {
   Navbar,
   Container,
@@ -29,6 +29,7 @@ const Header = (props) => {
     // },369)
   };
 
+<<<<<<< HEAD
   const [state, ] = useContext(CartContext); 
   // console.log(state.shoppingCart.length)
 
@@ -41,6 +42,8 @@ const Header = (props) => {
   //   })
   // },[])
   // console.log(props.user);
+=======
+>>>>>>> parent of c2e776b (quatity cart icon)
   const history = useHistory();
   const handleSearch = (e) => {
     if (e.key === 'Enter') {
@@ -156,8 +159,6 @@ const Header = (props) => {
 
                 <Link to="/cart" className="link">
                   <AiOutlineShoppingCart className="fs-1" />
-                  <span className='quantity'>{state.shoppingCart.length}</span>
-                  
                 </Link>
               </Nav>
             </Navbar.Collapse>
