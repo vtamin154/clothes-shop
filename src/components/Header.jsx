@@ -3,7 +3,6 @@ import { Link, useHistory } from 'react-router-dom';
 import logo from '../assets/clothes-img/logo.png';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { CartContext } from '../store/CartContext';
-
 import {
   Navbar,
   Container,
@@ -30,7 +29,7 @@ const Header = (props) => {
     // },369)
   };
 
-  const [state, ] = useContext(CartContext); 
+  const [state] = useContext(CartContext);
   // console.log(state.shoppingCart.length)
 
   // useEffect (() => {
@@ -42,7 +41,6 @@ const Header = (props) => {
   //   })
   // },[])
   // console.log(props.user);
-
   const history = useHistory();
   const handleSearch = (e) => {
     if (e.key === 'Enter') {
@@ -127,8 +125,7 @@ const Header = (props) => {
                 </Link>
                 {props.user ? (
                   <Dropdown className="my-account px-3">
-                    <Dropdown.Toggle 
-                     className='toggle form-control'>
+                    <Dropdown.Toggle className="toggle form-control">
                       <img
                         className="avatar me-2"
                         src={props.user.UserImg}
@@ -137,14 +134,14 @@ const Header = (props) => {
                       <span>{props.user.UserName}</span>
                     </Dropdown.Toggle>
 
-                    <Dropdown.Menu className='drop-menu'>
+                    <Dropdown.Menu className="drop-menu">
                       <Dropdown.Item as={Link} to="/account">
                         My account
                       </Dropdown.Item>
                       <Dropdown.Item as={Link} to="/order">
                         My order
                       </Dropdown.Item>
-                      <hr className='text-white'/>
+                      <hr className="text-white" />
                       <Dropdown.Item href="/login" onClick={logout}>
                         Logout
                       </Dropdown.Item>
@@ -158,6 +155,9 @@ const Header = (props) => {
 
                 <Link to="/cart" className="link">
                   <AiOutlineShoppingCart className="fs-1" />
+                  <span className="quantity bg-warning rounded-circle px-2 text-black">
+                    {state.shoppingCart.length}
+                  </span>
                 </Link>
               </Nav>
             </Navbar.Collapse>
